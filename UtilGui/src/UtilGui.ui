@@ -14,57 +14,49 @@
    <string>UtilGui</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="m_pBtChineseSupport">
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>40</y>
-      <width>93</width>
-      <height>28</height>
+      <x>0</x>
+      <y>1</y>
+      <width>591</width>
+      <height>101</height>
      </rect>
     </property>
-    <property name="text">
-     <string>中文支持</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="m_pLbPath">
-    <property name="geometry">
-     <rect>
-      <x>110</x>
-      <y>50</y>
-      <width>421</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>路径</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="m_pBtCompare">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>80</y>
-      <width>93</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>字符比较</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="m_pBtJoyStick">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>110</y>
-      <width>93</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>游戏手柄</string>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="m_pBtChineseSupport">
+         <property name="text">
+          <string>中文支持</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="m_pLbPath">
+         <property name="text">
+          <string>路径</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="m_pBtCompare">
+       <property name="text">
+        <string>字符比较</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="m_pBtJoyStick">
+       <property name="text">
+        <string>游戏手柄</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

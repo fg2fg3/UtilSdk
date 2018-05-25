@@ -2,6 +2,7 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_UtilGui.h"
+#include "JoyStickDialog.h"
 
 class UtilGui : public QMainWindow
 {
@@ -22,4 +23,7 @@ private slots:
 	void OnBtChineseSupportClicked();
 	void OnBtCompareClicked();
 	void OnBtJoyStickClicked();
+
+protected:
+	void closeEvent(QCloseEvent *event);
 };

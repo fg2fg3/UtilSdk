@@ -86,5 +86,11 @@ void UtilGui::OnBtCompareClicked()
 
 void UtilGui::OnBtJoyStickClicked()
 {
+	JoyStickDialog dlgJoy;
+	dlgJoy.exec();
+}
 
+void UtilGui::closeEvent(QCloseEvent *event)
+{
+	QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("¹Ø±ÕÖÐ!"));
 }

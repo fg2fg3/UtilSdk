@@ -1,0 +1,2 @@
+1.utilsdk主要是整理一些常用的工具，对外提供c接口使用
+2.uitlgui主要是Qt的demo，主界面

@@ -2,6 +2,7 @@
 
 #include <QDialog>
 #include "ui_JoyStickDialog.h"
+#include "JoystickThread.h"
 
 class JoyStickDialog : public QDialog
 {
@@ -13,4 +14,6 @@ public:
 
 private:
 	Ui::JoyStickDialog ui;
+
+	JoystickThread*		m_pTrdJoy;
 };
