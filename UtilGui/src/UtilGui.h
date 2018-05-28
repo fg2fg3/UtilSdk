@@ -23,6 +23,7 @@ private slots:
 	void OnBtChineseSupportClicked();
 	void OnBtCompareClicked();
 	void OnBtJoyStickClicked();
+	void OnBtOpencvDemoClicked();
 
 protected:
 	void closeEvent(QCloseEvent *event);

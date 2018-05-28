@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>400</height>
+    <width>593</width>
+    <height>720</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>0</x>
       <y>1</y>
       <width>591</width>
-      <height>101</height>
+      <height>137</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -56,6 +56,13 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="m_pBtOpencvDemo">
+       <property name="text">
+        <string>OpenCV功能测试-使用2.4.11</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
   </widget>
@@ -64,7 +71,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>600</width>
+     <width>593</width>
      <height>26</height>
     </rect>
    </property>

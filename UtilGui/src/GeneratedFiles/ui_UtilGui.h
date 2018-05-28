@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
@@ -20,6 +21,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -28,10 +30,14 @@ class Ui_UtilGuiClass
 {
 public:
     QWidget *centralWidget;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *verticalLayout;
+    QHBoxLayout *horizontalLayout;
     QPushButton *m_pBtChineseSupport;
     QLabel *m_pLbPath;
     QPushButton *m_pBtCompare;
     QPushButton *m_pBtJoyStick;
+    QPushButton *m_pBtOpencvDemo;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -40,25 +46,52 @@ public:
     {
         if (UtilGuiClass->objectName().isEmpty())
             UtilGuiClass->setObjectName(QStringLiteral("UtilGuiClass"));
-        UtilGuiClass->resize(600, 400);
+        UtilGuiClass->resize(593, 720);
         centralWidget = new QWidget(UtilGuiClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        m_pBtChineseSupport = new QPushButton(centralWidget);
+        verticalLayoutWidget = new QWidget(centralWidget);
+        verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
+        verticalLayoutWidget->setGeometry(QRect(0, 1, 591, 137));
+        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        m_pBtChineseSupport = new QPushButton(verticalLayoutWidget);
         m_pBtChineseSupport->setObjectName(QStringLiteral("m_pBtChineseSupport"));
-        m_pBtChineseSupport->setGeometry(QRect(10, 40, 93, 28));
-        m_pLbPath = new QLabel(centralWidget);
+
+        horizontalLayout->addWidget(m_pBtChineseSupport);
+
+        m_pLbPath = new QLabel(verticalLayoutWidget);
         m_pLbPath->setObjectName(QStringLiteral("m_pLbPath"));
-        m_pLbPath->setGeometry(QRect(110, 50, 421, 16));
-        m_pBtCompare = new QPushButton(centralWidget);
+
+        horizontalLayout->addWidget(m_pLbPath);
+
+
+        verticalLayout->addLayout(horizontalLayout);
+
+        m_pBtCompare = new QPushButton(verticalLayoutWidget);
         m_pBtCompare->setObjectName(QStringLiteral("m_pBtCompare"));
-        m_pBtCompare->setGeometry(QRect(10, 80, 93, 28));
-        m_pBtJoyStick = new QPushButton(centralWidget);
+
+        verticalLayout->addWidget(m_pBtCompare);
+
+        m_pBtJoyStick = new QPushButton(verticalLayoutWidget);
         m_pBtJoyStick->setObjectName(QStringLiteral("m_pBtJoyStick"));
-        m_pBtJoyStick->setGeometry(QRect(10, 110, 93, 28));
+
+        verticalLayout->addWidget(m_pBtJoyStick);
+
+        m_pBtOpencvDemo = new QPushButton(verticalLayoutWidget);
+        m_pBtOpencvDemo->setObjectName(QStringLiteral("m_pBtOpencvDemo"));
+
+        verticalLayout->addWidget(m_pBtOpencvDemo);
+
         UtilGuiClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(UtilGuiClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 600, 26));
+        menuBar->setGeometry(QRect(0, 0, 593, 26));
         UtilGuiClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(UtilGuiClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -79,6 +112,7 @@ public:
         m_pLbPath->setText(QApplication::translate("UtilGuiClass", "\350\267\257\345\276\204", 0));
         m_pBtCompare->setText(QApplication::translate("UtilGuiClass", "\345\255\227\347\254\246\346\257\224\350\276\203", 0));
         m_pBtJoyStick->setText(QApplication::translate("UtilGuiClass", "\346\270\270\346\210\217\346\211\213\346\237\204", 0));
+        m_pBtOpencvDemo->setText(QApplication::translate("UtilGuiClass", "OpenCV\345\212\237\350\203\275\346\265\213\350\257\225-\344\275\277\347\224\2502.4.11", 0));
     } // retranslateUi
 
 };

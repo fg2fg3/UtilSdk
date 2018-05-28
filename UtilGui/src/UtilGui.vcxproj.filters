@@ -73,13 +73,19 @@
     <ClCompile Include="JoystickThread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_OpencvDemoDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_OpencvDemoDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="OpencvDemoDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="UtilGui.h">
       <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="UtilGui.ui">
-      <Filter>Form Files</Filter>
     </CustomBuild>
     <CustomBuild Include="UtilGui.qrc">
       <Filter>Resource Files</Filter>
@@ -93,12 +99,24 @@
     <CustomBuild Include="JoystickThread.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="UtilGui.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="OpencvDemoDialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="OpencvDemoDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GeneratedFiles\ui_JoyStickDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_UtilGui.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_JoyStickDialog.h">
+    <ClInclude Include="GeneratedFiles\ui_OpencvDemoDialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

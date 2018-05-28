@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <QTextCodec>
 #include <QDebug>
+#include "OpencvDemoDialog.h"
 
 UtilGui::UtilGui(QWidget *parent)
 	: QMainWindow(parent)
@@ -13,6 +14,7 @@ UtilGui::UtilGui(QWidget *parent)
 	InitVar();
 	PrepareStyle();
 	PrepareSlot();
+	OnBtOpencvDemoClicked();
 }
 
 void UtilGui::SetupUI()
@@ -35,6 +37,7 @@ void UtilGui::PrepareSlot()
 	connect(ui.m_pBtChineseSupport, SIGNAL(clicked()), this, SLOT(OnBtChineseSupportClicked()));
 	connect(ui.m_pBtCompare, SIGNAL(clicked()), this, SLOT(OnBtCompareClicked()));
 	connect(ui.m_pBtJoyStick, SIGNAL(clicked()), this, SLOT(OnBtJoyStickClicked()));
+	connect(ui.m_pBtOpencvDemo, SIGNAL(clicked()), this, SLOT(OnBtOpencvDemoClicked()));
 }
 
 void UtilGui::OnBtChineseSupportClicked()
@@ -92,5 +95,11 @@ void UtilGui::OnBtJoyStickClicked()
 
 void UtilGui::closeEvent(QCloseEvent *event)
 {
-	QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("关闭中!"));
+//	QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("关闭中!"));
+}
+
+void UtilGui::OnBtOpencvDemoClicked()
+{
+	OpencvDemoDialog dlgOpencv;
+	dlgOpencv.exec();
 }
