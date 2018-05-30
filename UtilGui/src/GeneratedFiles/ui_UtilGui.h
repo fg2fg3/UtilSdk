@@ -38,6 +38,10 @@ public:
     QPushButton *m_pBtCompare;
     QPushButton *m_pBtJoyStick;
     QPushButton *m_pBtOpencvDemo;
+    QWidget *horizontalLayoutWidget;
+    QHBoxLayout *horizontalLayout_2;
+    QPushButton *m_pBtZipFile;
+    QPushButton *m_pBtUnzipFile;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -88,6 +92,24 @@ public:
 
         verticalLayout->addWidget(m_pBtOpencvDemo);
 
+        horizontalLayoutWidget = new QWidget(centralWidget);
+        horizontalLayoutWidget->setObjectName(QStringLiteral("horizontalLayoutWidget"));
+        horizontalLayoutWidget->setGeometry(QRect(70, 190, 195, 80));
+        horizontalLayout_2 = new QHBoxLayout(horizontalLayoutWidget);
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
+        m_pBtZipFile = new QPushButton(horizontalLayoutWidget);
+        m_pBtZipFile->setObjectName(QStringLiteral("m_pBtZipFile"));
+
+        horizontalLayout_2->addWidget(m_pBtZipFile);
+
+        m_pBtUnzipFile = new QPushButton(horizontalLayoutWidget);
+        m_pBtUnzipFile->setObjectName(QStringLiteral("m_pBtUnzipFile"));
+
+        horizontalLayout_2->addWidget(m_pBtUnzipFile);
+
         UtilGuiClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(UtilGuiClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -113,6 +135,8 @@ public:
         m_pBtCompare->setText(QApplication::translate("UtilGuiClass", "\345\255\227\347\254\246\346\257\224\350\276\203", 0));
         m_pBtJoyStick->setText(QApplication::translate("UtilGuiClass", "\346\270\270\346\210\217\346\211\213\346\237\204", 0));
         m_pBtOpencvDemo->setText(QApplication::translate("UtilGuiClass", "OpenCV\345\212\237\350\203\275\346\265\213\350\257\225-\344\275\277\347\224\2502.4.11", 0));
+        m_pBtZipFile->setText(QApplication::translate("UtilGuiClass", "\345\216\213\347\274\251\346\226\207\344\273\266", 0));
+        m_pBtUnzipFile->setText(QApplication::translate("UtilGuiClass", "\350\247\243\345\216\213\346\226\207\344\273\266", 0));
     } // retranslateUi
 
 };

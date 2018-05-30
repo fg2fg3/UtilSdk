@@ -19,7 +19,7 @@ extern "C"
 
 	UTILSDK_API	void*	UTILSDK_Init(void);
 	UTILSDK_API	void	UTILSDK_Uninit(void* pHandle);
-	UTILSDK_API int		UTILSDK_ZipFile(char * DestName, const char *SrcName, int para);
-	UTILSDK_API int		UTILSDK_UnzipFile(char * DestName, const char *SrcName, int para);
+	UTILSDK_API int		UTILSDK_ZipFile(const char * DestName, const char *SrcName, int para=0);
+	UTILSDK_API int		UTILSDK_UnzipFile(const char * DestName, const char *SrcName, int para=0);
 }
 #endif // !__UTILSDK_H

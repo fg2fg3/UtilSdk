@@ -4,6 +4,30 @@
 #include <QTextCodec>
 #include <QDebug>
 #include "OpencvDemoDialog.h"
+#include "UtilSdk.h"
+#include <windows.h>
+#include <tchar.h>
+#include "zip.h"
+#include "unzip.h"
+
+std::string TCHAR2STRING(TCHAR *STR)
+{
+	int iLen = WideCharToMultiByte(CP_ACP, 0, STR, -1, NULL, 0, NULL, NULL);
+	char* chRtn = new char[iLen*sizeof(char)];
+	WideCharToMultiByte(CP_ACP, 0, STR, -1, chRtn, iLen, NULL, NULL);
+	std::string str(chRtn);
+	delete chRtn;
+	return str;
+}
+
+void string2tchar(std::string &src, TCHAR* buf)
+{
+#ifdef UNICODE  
+	_stprintf_s(buf, MAX_PATH, _T("%S"), src.c_str());//%S¿í×Ö·û  
+#else  
+	_stprintf_s(buf, MAX_PATH, _T("%s"), src.c_str());//%sµ¥×Ö·û
+#endif
+}
 
 UtilGui::UtilGui(QWidget *parent)
 	: QMainWindow(parent)
@@ -38,6 +62,8 @@ void UtilGui::PrepareSlot()
 	connect(ui.m_pBtCompare, SIGNAL(clicked()), this, SLOT(OnBtCompareClicked()));
 	connect(ui.m_pBtJoyStick, SIGNAL(clicked()), this, SLOT(OnBtJoyStickClicked()));
 	connect(ui.m_pBtOpencvDemo, SIGNAL(clicked()), this, SLOT(OnBtOpencvDemoClicked()));
+	connect(ui.m_pBtZipFile, SIGNAL(clicked()), this, SLOT(OnBtZipFileClicked()));
+	connect(ui.m_pBtUnzipFile, SIGNAL(clicked()), this, SLOT(OnBtUnzipFileClicked()));
 }
 
 void UtilGui::OnBtChineseSupportClicked()
@@ -102,4 +128,56 @@ void UtilGui::OnBtOpencvDemoClicked()
 {
 	OpencvDemoDialog dlgOpencv;
 	dlgOpencv.exec();
+}
+
+void UtilGui::OnBtZipFileClicked()
+{
+	QString qsZipPath = qApp->applicationDirPath() + "/files/" + "2.zip";
+	QString qsFile = qApp->applicationDirPath() + "/files/" + "1.flv";
+	HZIP hz; DWORD writ;
+
+
+	TCHAR zipPath[MAX_PATH] = { 0 };
+	TCHAR fileAdd[MAX_PATH] = { 0 };
+	string2tchar(qsZipPath.toStdString(), zipPath);
+	string2tchar(qsFile.toStdString(), fileAdd);
+
+	// EXAMPLE 1 - create a zipfile from existing files
+	hz = CreateZip(zipPath, 0);
+	ZipAdd(hz,fileAdd, fileAdd);
+	//ZipAdd(hz, _T("znsimple.txt"), _T("\\simple.txt"));
+	CloseZip(hz);
+	//_tprintf(_T("Created '\\simple1.zip'\n"));
+}
+
+void UtilGui::OnBtUnzipFileClicked()
+{
+	QString qsSrc = qApp->applicationDirPath() + "/files/" + "1.zip";
+	QString qsDestDir = qApp->applicationDirPath() + "/files/" ;
+	//UTILSDK_UnzipFile(qsDest.toStdString().c_str(), qsSrc.toStdString().c_str());
+	HZIP hz; DWORD writ;
+
+	// EXAMPLE 1 - create a zipfile from existing files
+	//hz = CreateZip(_T("\\simple1.zip"), 0);
+	//ZipAdd(hz, _T("znsimple.bmp"), _T("\\simple.bmp"));
+	//ZipAdd(hz, _T("znsimple.txt"), _T("\\simple.txt"));
+	//CloseZip(hz);
+	//_tprintf(_T("Created '\\simple1.zip'\n"));
+
+	std::string res = qsSrc.toStdString();
+	std::string sDstDir = qsDestDir.toStdString();
+
+	TCHAR zipPath[MAX_PATH] = { 0 };
+	TCHAR destDir[MAX_PATH] = { 0 };
+	string2tchar(res, zipPath);
+	string2tchar(sDstDir, destDir);
+	hz = OpenZip(zipPath, 0);
+	SetUnzipBaseDir(hz, destDir);
+	ZIPENTRY ze; GetZipItem(hz, -1, &ze); int numitems = ze.index;
+	for (int zi = 0; zi < numitems; zi++)
+	{
+		GetZipItem(hz, zi, &ze);
+		UnzipItem(hz, zi, ze.name);
+	}
+	CloseZip(hz);
 }

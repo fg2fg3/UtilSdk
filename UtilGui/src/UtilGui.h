@@ -24,6 +24,8 @@ private slots:
 	void OnBtCompareClicked();
 	void OnBtJoyStickClicked();
 	void OnBtOpencvDemoClicked();
+	void OnBtZipFileClicked();
+	void OnBtUnzipFileClicked();
 
 protected:
 	void closeEvent(QCloseEvent *event);
