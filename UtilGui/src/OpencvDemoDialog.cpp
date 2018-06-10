@@ -35,7 +35,7 @@ void OpencvDemoDialog::OnBtPic1Clicked()
 
 void OpencvDemoDialog::OnBtPic2Clicked()
 {
-	QString path = qApp->applicationDirPath() + "/pic/benci.jpg";//为何显示灰度的歪斜图
+	QString path = qApp->applicationDirPath() + "/pic/huidu.jpg";//为何显示灰度的歪斜图
 	ui.m_pLbPic1Path->setText(path);
 
 	m_mat2 = cv::imread(path.toLatin1().data());
@@ -58,9 +58,12 @@ void OpencvDemoDialog::OnBtPic2Clicked()
 
 void OpencvDemoDialog::OnBtMergePic()
 {
-	cv::Mat ROI = m_mat2(cv::Rect(0, 0, 100, 100));
-	m_mat2.copyTo(ROI, m_mat1);
-	//假如用m_matMTI.copyTo(ROI),MTI的黑背景也会画到m_matSAR上面.  
+	cv::Mat ROI = m_mat1(cv::Rect(300, 300, m_mat2.cols, m_mat2.rows));
+
+	QString path = qApp->applicationDirPath() + "/pic/huidu.jpg";
+	cv::Mat mask = cv::imread(path.toLatin1().data(), 0);
+
+	m_mat2.copyTo(ROI, mask);//roi区域和mask掩膜
 	QImage img = QImage((const unsigned char*)(m_mat1.data), m_mat1.cols, m_mat1.rows, QImage::Format_RGB888);
 	QPixmap mp = mp.fromImage(img);
 	ui.m_pLbPicMerge->setPixmap(mp);

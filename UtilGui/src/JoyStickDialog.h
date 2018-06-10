@@ -3,6 +3,7 @@
 #include <QDialog>
 #include "ui_JoyStickDialog.h"
 #include "JoystickThread.h"
+#include <QSettings>
 
 class JoyStickDialog : public QDialog
 {
@@ -16,4 +17,6 @@ private:
 	Ui::JoyStickDialog ui;
 
 	JoystickThread*		m_pTrdJoy;
+private slots:
+	void OnBtCaptureClicked();
 };

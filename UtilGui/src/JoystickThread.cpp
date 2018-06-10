@@ -5,6 +5,14 @@
 #include "joystickapi.h"
 #include "Mmsystem.h"
 
+#define BASE_POS 32767
+#define MIN_X_POS 0
+#define MAX_X_POS 65535
+#define MIN_Y_POS 0
+#define MAX_Y_POS 65535
+#define BASE_ANGLE 45 //X=Y 45度角
+
+
 JoystickThread::JoystickThread(QObject *parent)
 	:QThread(parent),
 	m_valid(false),
@@ -51,6 +59,24 @@ void JoystickThread::setZThreshold(int z)
 	m_zThreshold = abs(z);
 }
 
+void JoystickThread::Capture()
+{
+	m_run = true;
+	JOYINFO joyinfo;
+	if (joyGetNumDevs() > 0 && joyGetPos(JOYSTICKID1, &joyinfo) != JOYERR_UNPLUGGED)
+	{
+		m_valid = true;
+		qDebug() << "m_valid = true";
+	}
+
+	for (int i = 0; i < 8; i++)
+	{
+		m_button[i] = 0;
+	}
+}
+
+
+
 void JoystickThread::run()
 {
 	JOYINFOEX joyinfoex;
@@ -58,16 +84,94 @@ void JoystickThread::run()
 	joyinfoex.dwFlags = JOY_RETURNALL;
 	while (m_valid && m_run)
 	{
-		if (joyGetPosEx(JOYSTICKID1, &joyinfoex) == JOYERR_NOERROR)
+		int ret = joyGetPosEx(JOYSTICKID1, &joyinfoex);
+		if (ret == JOYERR_NOERROR)
 		{
-			AxisX_StateMachine(joyinfoex.dwXpos);
-			AxisY_StateMachine(joyinfoex.dwYpos);
-			AxisZ_StateMachine(joyinfoex.dwZpos);
-			Button_StateMachine(joyinfoex.dwButtons);
+			qDebug()<<joyinfoex.dwXpos<<","<<joyinfoex.dwYpos<<","<<joyinfoex.dwZpos<<",button:"<<joyinfoex.dwButtons<<",current"<<joyinfoex.dwButtonNumber;
+
+			SendSerialCmd(joyinfoex.dwXpos, joyinfoex.dwYpos, joyinfoex.dwButtons);
+		}
+		else
+		{
+			qDebug() << "Error is " << ret;
+
 		}
 
-		msleep(m_monitor_interval);
+		msleep(1000);//2s更新一次
 	}
+}
+void JoystickThread::SendSerialCmd(DWORD dwXpos, DWORD dwYpos, DWORD dwButtons)
+{
+	short int nAngle = 0;
+	if ((dwXpos == BASE_POS && dwYpos == BASE_POS && dwButtons == 4) || (dwXpos == BASE_POS && dwYpos == MAX_Y_POS))
+	{
+		//发送尾视图
+		qDebug() << " tail view" << nAngle;
+	}
+
+	else if ((dwXpos == BASE_POS && dwYpos == BASE_POS && dwButtons == 2) || (dwXpos == MAX_X_POS && dwYpos == BASE_POS))
+	{
+		//发送右视图
+		qDebug() << " right view" << nAngle;
+	}
+
+	else if ((dwXpos == BASE_POS && dwYpos == BASE_POS && dwButtons == 1) || (dwXpos == BASE_POS && dwYpos == 0))
+	{
+		//发送前视图
+		qDebug() << " head view" << nAngle;
+	}
+
+	else if ((dwXpos == BASE_POS && dwYpos == BASE_POS && dwButtons == 8) || (dwXpos == 0 && dwYpos == BASE_POS))
+	{
+		//发送左视图
+		qDebug() << " left view" << nAngle;
+	}
+
+	else if (dwXpos == BASE_POS && dwYpos == BASE_POS && dwButtons == 32)
+	{
+		//发送顶视图
+		qDebug() << " top view" << nAngle;
+	}
+
+	else if (dwXpos == BASE_POS && dwYpos == BASE_POS && dwButtons == 0)
+	{
+		//发送顶视图
+		qDebug() << " No operaion" << nAngle;
+	}
+
+	//右上象限
+	else if ((BASE_POS < dwXpos) && (dwXpos <= MAX_X_POS) && (dwYpos < BASE_POS))
+	{
+		nAngle = (long)(BASE_POS - dwYpos) * 45 / (dwXpos - BASE_POS);
+		qDebug() << " Top right:nAngle" << nAngle;
+	}
+
+	//左上象限
+	else if ((dwXpos < BASE_POS) && (dwYpos < BASE_POS))
+	{
+		nAngle = (long)(BASE_POS - dwYpos) * 45 / ( BASE_POS - dwXpos);
+		nAngle += 90;
+		qDebug() << "Top left:nAngle" << nAngle;
+	}
+
+	else if ((dwXpos < BASE_POS) && (BASE_POS < dwYpos ) && (dwYpos <= MAX_Y_POS))
+	{
+		nAngle = (long)(dwYpos - BASE_POS ) * 45 / (BASE_POS - dwXpos);
+		nAngle += 180;
+		qDebug() << "bottom left:nAngle" << nAngle;
+	}
+
+	else if ((BASE_POS < dwXpos ) && ( dwXpos < MAX_X_POS ) &&(BASE_POS < dwYpos) && (dwYpos <= MAX_Y_POS))
+	{
+		nAngle = (long)(dwXpos - BASE_POS) * 45 / ( dwYpos - BASE_POS);
+		nAngle += 270;
+		qDebug() << "bottom right:nAngle" << nAngle;
+	}
+	else
+	{
+		qDebug() << "Unknow section ";
+	}
+
 }
 
 void JoystickThread::setMonitorInterval(int interval)
@@ -266,3 +370,4 @@ void JoystickThread::Button_StateMachine(int button)
 		}
 	}
 }
+

@@ -15,18 +15,23 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QPushButton>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_JoyStickDialog
 {
 public:
+    QPushButton *m_pBtCapture;
 
     void setupUi(QDialog *JoyStickDialog)
     {
         if (JoyStickDialog->objectName().isEmpty())
             JoyStickDialog->setObjectName(QStringLiteral("JoyStickDialog"));
         JoyStickDialog->resize(400, 300);
+        m_pBtCapture = new QPushButton(JoyStickDialog);
+        m_pBtCapture->setObjectName(QStringLiteral("m_pBtCapture"));
+        m_pBtCapture->setGeometry(QRect(70, 140, 191, 41));
 
         retranslateUi(JoyStickDialog);
 
@@ -36,6 +41,7 @@ public:
     void retranslateUi(QDialog *JoyStickDialog)
     {
         JoyStickDialog->setWindowTitle(QApplication::translate("JoyStickDialog", "JoyStickDialog", 0));
+        m_pBtCapture->setText(QApplication::translate("JoyStickDialog", "\351\207\215\346\226\260\350\216\267\345\217\226\350\256\276\345\244\207", 0));
     } // retranslateUi
 
 };

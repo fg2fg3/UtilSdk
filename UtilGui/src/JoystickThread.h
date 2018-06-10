@@ -1,6 +1,8 @@
 #pragma once
 
 #include <QThread>
+#include <windows.h>
+#include <QtSerialPort>
 
 class JoystickThread : public QThread
 {
@@ -15,6 +17,8 @@ public:
 	* @brief stop 停止监听线程
 	*/
 	void stop();
+
+	void Capture();
 
 signals:
 	/// 手柄 XY 轴的输出信号
@@ -91,6 +95,7 @@ private:
 	void AxisY_StateMachine(int yPos);
 	void AxisZ_StateMachine(int zPos);
 	void Button_StateMachine(int button);
+	void SendSerialCmd(DWORD dwXpos, DWORD dwYpos, DWORD dwButtons);
 
 	int m_xThreshold;
 	int m_yThreshold;
