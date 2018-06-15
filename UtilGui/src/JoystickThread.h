@@ -20,6 +20,8 @@ public:
 
 	void Capture();
 
+	void SetCom(QSerialPort* serialPort){ m_serial = serialPort; }
+
 signals:
 	/// 手柄 XY 轴的输出信号
 	/// 需 enableSignal(true), enableXYSignal(true) 才有效
@@ -97,6 +99,7 @@ private:
 	void Button_StateMachine(int button);
 	void SendSerialCmd(DWORD dwXpos, DWORD dwYpos, DWORD dwButtons);
 
+	QSerialPort* m_serial;
 	int m_xThreshold;
 	int m_yThreshold;
 	int m_zThreshold;

@@ -98,6 +98,7 @@ void JoystickThread::run()
 		}
 
 		msleep(1000);//2s更新一次
+		m_serial->write("Send data");
 	}
 }
 void JoystickThread::SendSerialCmd(DWORD dwXpos, DWORD dwYpos, DWORD dwButtons)

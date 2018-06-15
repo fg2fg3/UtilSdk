@@ -38,6 +38,7 @@ public:
     QPushButton *m_pBtCompare;
     QPushButton *m_pBtJoyStick;
     QPushButton *m_pBtOpencvDemo;
+    QPushButton *m_pBtSqlite;
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout_2;
     QPushButton *m_pBtZipFile;
@@ -55,7 +56,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayoutWidget = new QWidget(centralWidget);
         verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(0, 1, 591, 137));
+        verticalLayoutWidget->setGeometry(QRect(0, 1, 591, 172));
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -91,6 +92,11 @@ public:
         m_pBtOpencvDemo->setObjectName(QStringLiteral("m_pBtOpencvDemo"));
 
         verticalLayout->addWidget(m_pBtOpencvDemo);
+
+        m_pBtSqlite = new QPushButton(verticalLayoutWidget);
+        m_pBtSqlite->setObjectName(QStringLiteral("m_pBtSqlite"));
+
+        verticalLayout->addWidget(m_pBtSqlite);
 
         horizontalLayoutWidget = new QWidget(centralWidget);
         horizontalLayoutWidget->setObjectName(QStringLiteral("horizontalLayoutWidget"));
@@ -135,6 +141,7 @@ public:
         m_pBtCompare->setText(QApplication::translate("UtilGuiClass", "\345\255\227\347\254\246\346\257\224\350\276\203", 0));
         m_pBtJoyStick->setText(QApplication::translate("UtilGuiClass", "\346\270\270\346\210\217\346\211\213\346\237\204", 0));
         m_pBtOpencvDemo->setText(QApplication::translate("UtilGuiClass", "OpenCV\345\212\237\350\203\275\346\265\213\350\257\225-\344\275\277\347\224\2502.4.11", 0));
+        m_pBtSqlite->setText(QApplication::translate("UtilGuiClass", "\346\265\213\350\257\225sqlite", 0));
         m_pBtZipFile->setText(QApplication::translate("UtilGuiClass", "\345\216\213\347\274\251\346\226\207\344\273\266", 0));
         m_pBtUnzipFile->setText(QApplication::translate("UtilGuiClass", "\350\247\243\345\216\213\346\226\207\344\273\266", 0));
     } // retranslateUi

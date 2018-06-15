@@ -20,7 +20,7 @@
       <x>0</x>
       <y>1</y>
       <width>591</width>
-      <height>137</height>
+      <height>172</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -60,6 +60,13 @@
       <widget class="QPushButton" name="m_pBtOpencvDemo">
        <property name="text">
         <string>OpenCV功能测试-使用2.4.11</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="m_pBtSqlite">
+       <property name="text">
+        <string>测试sqlite</string>
        </property>
       </widget>
      </item>

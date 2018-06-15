@@ -26,6 +26,7 @@ private slots:
 	void OnBtOpencvDemoClicked();
 	void OnBtZipFileClicked();
 	void OnBtUnzipFileClicked();
+	void OnBtSqliteClicked();
 
 protected:
 	void closeEvent(QCloseEvent *event);
