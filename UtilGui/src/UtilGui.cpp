@@ -24,6 +24,71 @@ std::string TCHAR2STRING(TCHAR *STR)
 	return str;
 }
 
+/************************************************************************
+*   功能：将一个十六进制字节串转换成 ASCII 码表示的十六进制的字符串
+*   输入参数：pHex    -- 十六进制数字节串首地址
+*            pAscii -- 转换后的 ASCII 码表示的十六进制字符串的首地址
+*            nLen    -- 要转换的十六进制数的长度（字节数）
+*   输出参数：None
+*   注：  转换后的结果全部是大写 ASCII 表示的十六进制数
+************************************************************************/
+void HexToAscii(unsigned char * pHex, unsigned char * pAscii, int nLen)
+{
+	unsigned char Nibble[2];
+
+	for (int i = 0; i < nLen; i++)
+	{
+		Nibble[0] = (pHex[i] & 0xF0) >> 4;
+		Nibble[1] = pHex[i] & 0x0F;
+		for (int j = 0; j < 2; j++)
+		{
+			if (Nibble[j] < 10)
+				Nibble[j] += 0x30;
+			else
+			{
+				if (Nibble[j] < 16)
+					Nibble[j] = Nibble[j] - 10 + 'A';
+			}
+			*pAscii++ = Nibble[j];
+		}   // for (int j = ...)
+	}   // for (int i = ...)
+}
+
+/****************************************************************************
+*   功能：将一个 ASCII 码表示的十六进制字符串转换成十六进制的字节串
+*   输入参数：pAscii -- 转换后的 ASCII 码表示的十六进制字符串的首地址
+*            pHex   -- 十六进制数字节串首地址
+*            nLen   -- 要转换的 ASCII 码表示的十六进制字符串的长度（字节数）
+*   输出参数：None
+*   注：  要求输入的 ASCII 码表示的十六进制数的字符个数必须为偶数，除了是1 - 9 和 A(a) - F(f) 以外没有别的字符
+****************************************************************************/
+void AsciiToHex(unsigned char * pAscii, unsigned char * pHex, int nLen)
+{
+	if (nLen % 2)
+		return;
+	int nHexLen = nLen / 2;
+
+	for (int i = 0; i < nHexLen; i++)
+	{
+		unsigned char Nibble[2];
+		Nibble[0] = *pAscii++;
+		Nibble[1] = *pAscii++;
+		for (int j = 0; j < 2; j++)
+		{
+			if (Nibble[j] <= 'F' && Nibble[j] >= 'A')
+				Nibble[j] = Nibble[j] - 'A' + 10;
+			else if (Nibble[j] <= 'f' && Nibble[j] >= 'a')
+				Nibble[j] = Nibble[j] - 'a' + 10;
+			else if (Nibble[j] >= '0' && Nibble[j] <= '9')
+				Nibble[j] = Nibble[j] - '0';
+			else
+				return;
+		}   // for (int j = ...)
+		pHex[i] = Nibble[0] << 4;   // Set the high nibble
+		pHex[i] |= Nibble[1];   //Set the low nibble
+	}   // for (int i = ...)
+}
+
 void string2tchar(std::string &src, TCHAR* buf)
 {
 #ifdef UNICODE  
@@ -68,6 +133,7 @@ void UtilGui::PrepareSlot()
 	connect(ui.m_pBtZipFile, SIGNAL(clicked()), this, SLOT(OnBtZipFileClicked()));
 	connect(ui.m_pBtUnzipFile, SIGNAL(clicked()), this, SLOT(OnBtUnzipFileClicked()));
 	connect(ui.m_pBtSqlite, SIGNAL(clicked()), this, SLOT(OnBtSqliteClicked()));
+	connect(ui.m_pBtHexString, SIGNAL(clicked()), this, SLOT(OnBtHexString()));
 }
 
 void UtilGui::OnBtChineseSupportClicked()
@@ -368,4 +434,12 @@ void UtilGui::OnBtSqliteClicked()
 
 
 	db.close();
+}
+
+void UtilGui::OnBtHexString()
+{
+	unsigned char hex[5] = { 0x23, 0x3A, 0x46, 0x4C, 0x52 };
+	unsigned char hexString[10] = { 0 };
+	HexToAscii(hex, hexString, 5);
+	HexToAscii(hex, hexString, 10);
 }

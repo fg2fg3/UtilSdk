@@ -27,6 +27,7 @@ private slots:
 	void OnBtZipFileClicked();
 	void OnBtUnzipFileClicked();
 	void OnBtSqliteClicked();
+	void OnBtHexString();
 
 protected:
 	void closeEvent(QCloseEvent *event);

@@ -35,11 +35,13 @@ public:
     QHBoxLayout *horizontalLayout;
     QPushButton *m_pBtChineseSupport;
     QLabel *m_pLbPath;
+    QHBoxLayout *horizontalLayout_3;
     QPushButton *m_pBtCompare;
+    QPushButton *m_pBtHexString;
+    QPushButton *pushButton_2;
     QPushButton *m_pBtJoyStick;
     QPushButton *m_pBtOpencvDemo;
     QPushButton *m_pBtSqlite;
-    QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout_2;
     QPushButton *m_pBtZipFile;
     QPushButton *m_pBtUnzipFile;
@@ -56,7 +58,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayoutWidget = new QWidget(centralWidget);
         verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(0, 1, 591, 172));
+        verticalLayoutWidget->setGeometry(QRect(0, 1, 591, 211));
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -78,10 +80,26 @@ public:
 
         verticalLayout->addLayout(horizontalLayout);
 
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setSpacing(6);
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
         m_pBtCompare = new QPushButton(verticalLayoutWidget);
         m_pBtCompare->setObjectName(QStringLiteral("m_pBtCompare"));
 
-        verticalLayout->addWidget(m_pBtCompare);
+        horizontalLayout_3->addWidget(m_pBtCompare);
+
+        m_pBtHexString = new QPushButton(verticalLayoutWidget);
+        m_pBtHexString->setObjectName(QStringLiteral("m_pBtHexString"));
+
+        horizontalLayout_3->addWidget(m_pBtHexString);
+
+        pushButton_2 = new QPushButton(verticalLayoutWidget);
+        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+
+        horizontalLayout_3->addWidget(pushButton_2);
+
+
+        verticalLayout->addLayout(horizontalLayout_3);
 
         m_pBtJoyStick = new QPushButton(verticalLayoutWidget);
         m_pBtJoyStick->setObjectName(QStringLiteral("m_pBtJoyStick"));
@@ -98,23 +116,21 @@ public:
 
         verticalLayout->addWidget(m_pBtSqlite);
 
-        horizontalLayoutWidget = new QWidget(centralWidget);
-        horizontalLayoutWidget->setObjectName(QStringLiteral("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(70, 190, 195, 80));
-        horizontalLayout_2 = new QHBoxLayout(horizontalLayoutWidget);
+        horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setSpacing(6);
-        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
-        m_pBtZipFile = new QPushButton(horizontalLayoutWidget);
+        m_pBtZipFile = new QPushButton(verticalLayoutWidget);
         m_pBtZipFile->setObjectName(QStringLiteral("m_pBtZipFile"));
 
         horizontalLayout_2->addWidget(m_pBtZipFile);
 
-        m_pBtUnzipFile = new QPushButton(horizontalLayoutWidget);
+        m_pBtUnzipFile = new QPushButton(verticalLayoutWidget);
         m_pBtUnzipFile->setObjectName(QStringLiteral("m_pBtUnzipFile"));
 
         horizontalLayout_2->addWidget(m_pBtUnzipFile);
+
+
+        verticalLayout->addLayout(horizontalLayout_2);
 
         UtilGuiClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(UtilGuiClass);
@@ -139,6 +155,8 @@ public:
         m_pBtChineseSupport->setText(QApplication::translate("UtilGuiClass", "\344\270\255\346\226\207\346\224\257\346\214\201", 0));
         m_pLbPath->setText(QApplication::translate("UtilGuiClass", "\350\267\257\345\276\204", 0));
         m_pBtCompare->setText(QApplication::translate("UtilGuiClass", "\345\255\227\347\254\246\346\257\224\350\276\203", 0));
+        m_pBtHexString->setText(QApplication::translate("UtilGuiClass", "16\350\277\233\345\210\266\345\222\214\345\255\227\347\254\246\344\270\262", 0));
+        pushButton_2->setText(QApplication::translate("UtilGuiClass", "PushButton", 0));
         m_pBtJoyStick->setText(QApplication::translate("UtilGuiClass", "\346\270\270\346\210\217\346\211\213\346\237\204", 0));
         m_pBtOpencvDemo->setText(QApplication::translate("UtilGuiClass", "OpenCV\345\212\237\350\203\275\346\265\213\350\257\225-\344\275\277\347\224\2502.4.11", 0));
         m_pBtSqlite->setText(QApplication::translate("UtilGuiClass", "\346\265\213\350\257\225sqlite", 0));
