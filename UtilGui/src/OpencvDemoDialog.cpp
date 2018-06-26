@@ -68,3 +68,4 @@ void OpencvDemoDialog::OnBtMergePic()
 	QPixmap mp = mp.fromImage(img);
 	ui.m_pLbPicMerge->setPixmap(mp);
 }
+

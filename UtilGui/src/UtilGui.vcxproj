@@ -127,6 +127,7 @@ editbin /SUBSYSTEM:CONSOLE $(OUTDIR)\$(TargetFileName)</Command>
     <ClInclude Include="GeneratedFiles\ui_JoyStickDialog.h" />
     <ClInclude Include="GeneratedFiles\ui_OpencvDemoDialog.h" />
     <ClInclude Include="GeneratedFiles\ui_UtilGui.h" />
+    <ClInclude Include="ringbuffert.h" />
     <CustomBuild Include="OpencvDemoDialog.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing OpencvDemoDialog.h...</Message>

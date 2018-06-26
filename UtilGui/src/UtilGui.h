@@ -13,6 +13,7 @@ public:
 
 private:
 	Ui::UtilGuiClass ui;
+	QSerialPort *serial;
 
 	void PrepareSlot();
 	void PrepareStyle();
@@ -28,6 +29,10 @@ private slots:
 	void OnBtUnzipFileClicked();
 	void OnBtSqliteClicked();
 	void OnBtHexString();
+	void OnBtSerialPort();
+	void OnBtCloseSerialPort();
+	void OnBtStartQueue();
+	void OnBtStopQueue();
 
 protected:
 	void closeEvent(QCloseEvent *event);

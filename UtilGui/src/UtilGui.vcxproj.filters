@@ -125,5 +125,8 @@
     <ClInclude Include="GeneratedFiles\ui_OpencvDemoDialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="ringbuffert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

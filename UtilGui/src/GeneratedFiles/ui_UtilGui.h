@@ -38,13 +38,16 @@ public:
     QHBoxLayout *horizontalLayout_3;
     QPushButton *m_pBtCompare;
     QPushButton *m_pBtHexString;
-    QPushButton *pushButton_2;
+    QPushButton *m_pBtSerialPort;
+    QPushButton *m_pBtCloseSerialPort;
     QPushButton *m_pBtJoyStick;
     QPushButton *m_pBtOpencvDemo;
     QPushButton *m_pBtSqlite;
     QHBoxLayout *horizontalLayout_2;
     QPushButton *m_pBtZipFile;
     QPushButton *m_pBtUnzipFile;
+    QPushButton *m_pBtStartQueue;
+    QPushButton *m_pBtStopQueue;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -93,10 +96,15 @@ public:
 
         horizontalLayout_3->addWidget(m_pBtHexString);
 
-        pushButton_2 = new QPushButton(verticalLayoutWidget);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+        m_pBtSerialPort = new QPushButton(verticalLayoutWidget);
+        m_pBtSerialPort->setObjectName(QStringLiteral("m_pBtSerialPort"));
 
-        horizontalLayout_3->addWidget(pushButton_2);
+        horizontalLayout_3->addWidget(m_pBtSerialPort);
+
+        m_pBtCloseSerialPort = new QPushButton(verticalLayoutWidget);
+        m_pBtCloseSerialPort->setObjectName(QStringLiteral("m_pBtCloseSerialPort"));
+
+        horizontalLayout_3->addWidget(m_pBtCloseSerialPort);
 
 
         verticalLayout->addLayout(horizontalLayout_3);
@@ -129,6 +137,16 @@ public:
 
         horizontalLayout_2->addWidget(m_pBtUnzipFile);
 
+        m_pBtStartQueue = new QPushButton(verticalLayoutWidget);
+        m_pBtStartQueue->setObjectName(QStringLiteral("m_pBtStartQueue"));
+
+        horizontalLayout_2->addWidget(m_pBtStartQueue);
+
+        m_pBtStopQueue = new QPushButton(verticalLayoutWidget);
+        m_pBtStopQueue->setObjectName(QStringLiteral("m_pBtStopQueue"));
+
+        horizontalLayout_2->addWidget(m_pBtStopQueue);
+
 
         verticalLayout->addLayout(horizontalLayout_2);
 
@@ -156,12 +174,15 @@ public:
         m_pLbPath->setText(QApplication::translate("UtilGuiClass", "\350\267\257\345\276\204", 0));
         m_pBtCompare->setText(QApplication::translate("UtilGuiClass", "\345\255\227\347\254\246\346\257\224\350\276\203", 0));
         m_pBtHexString->setText(QApplication::translate("UtilGuiClass", "16\350\277\233\345\210\266\345\222\214\345\255\227\347\254\246\344\270\262", 0));
-        pushButton_2->setText(QApplication::translate("UtilGuiClass", "PushButton", 0));
+        m_pBtSerialPort->setText(QApplication::translate("UtilGuiClass", "\344\270\262\345\217\243\350\260\203\350\257\225", 0));
+        m_pBtCloseSerialPort->setText(QApplication::translate("UtilGuiClass", "\345\205\263\351\227\255\344\270\262\345\217\243", 0));
         m_pBtJoyStick->setText(QApplication::translate("UtilGuiClass", "\346\270\270\346\210\217\346\211\213\346\237\204", 0));
         m_pBtOpencvDemo->setText(QApplication::translate("UtilGuiClass", "OpenCV\345\212\237\350\203\275\346\265\213\350\257\225-\344\275\277\347\224\2502.4.11", 0));
         m_pBtSqlite->setText(QApplication::translate("UtilGuiClass", "\346\265\213\350\257\225sqlite", 0));
         m_pBtZipFile->setText(QApplication::translate("UtilGuiClass", "\345\216\213\347\274\251\346\226\207\344\273\266", 0));
         m_pBtUnzipFile->setText(QApplication::translate("UtilGuiClass", "\350\247\243\345\216\213\346\226\207\344\273\266", 0));
+        m_pBtStartQueue->setText(QApplication::translate("UtilGuiClass", "\345\220\257\345\212\250\351\230\237\345\210\227", 0));
+        m_pBtStopQueue->setText(QApplication::translate("UtilGuiClass", "\345\201\234\346\255\242\351\230\237\345\210\227", 0));
     } // retranslateUi
 
 };

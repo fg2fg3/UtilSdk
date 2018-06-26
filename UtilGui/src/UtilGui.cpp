@@ -13,6 +13,10 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlRecord>
+#include "ringbuffert.h"
+#include "qringbuffer.h"
+
+#define USE_QRINGBUFFER 0
 
 std::string TCHAR2STRING(TCHAR *STR)
 {
@@ -121,7 +125,7 @@ void UtilGui::InitVar()
 
 void UtilGui::PrepareStyle()
 {
-
+	serial = new QSerialPort;
 }
 
 void UtilGui::PrepareSlot()
@@ -134,6 +138,10 @@ void UtilGui::PrepareSlot()
 	connect(ui.m_pBtUnzipFile, SIGNAL(clicked()), this, SLOT(OnBtUnzipFileClicked()));
 	connect(ui.m_pBtSqlite, SIGNAL(clicked()), this, SLOT(OnBtSqliteClicked()));
 	connect(ui.m_pBtHexString, SIGNAL(clicked()), this, SLOT(OnBtHexString()));
+	connect(ui.m_pBtSerialPort, SIGNAL(clicked()), this, SLOT(OnBtSerialPort()));
+	connect(ui.m_pBtCloseSerialPort, SIGNAL(clicked()), this, SLOT(OnBtCloseSerialPort()));
+	connect(ui.m_pBtStartQueue, SIGNAL(clicked()), this, SLOT(OnBtStartQueue()));
+	connect(ui.m_pBtStopQueue, SIGNAL(clicked()), this, SLOT(OnBtStopQueue()));
 }
 
 void UtilGui::OnBtChineseSupportClicked()
@@ -192,6 +200,12 @@ void UtilGui::OnBtJoyStickClicked()
 void UtilGui::closeEvent(QCloseEvent *event)
 {
 //	QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("关闭中!"));
+	if (serial != nullptr)
+	{
+		serial->clear();
+		serial->close();
+		serial->deleteLater();
+	}
 }
 
 void UtilGui::OnBtOpencvDemoClicked()
@@ -442,4 +456,117 @@ void UtilGui::OnBtHexString()
 	unsigned char hexString[10] = { 0 };
 	HexToAscii(hex, hexString, 5);
 	HexToAscii(hex, hexString, 10);
+}
+
+void UtilGui::OnBtSerialPort()
+{
+
+	//设置串口名
+	serial->setPortName("COM1");
+	//打开串口
+	serial->open(QIODevice::ReadWrite);
+	//设置波特率
+	serial->setBaudRate(115200);
+	//设置数据位
+	serial->setDataBits(QSerialPort::Data8);
+	serial->setParity(QSerialPort::NoParity);
+	serial->setStopBits(QSerialPort::OneStop);
+	char cmd[8] = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00 };
+	serial->write("111111");
+	serial->write("222222");
+	serial->write("333333");
+	serial->write(cmd);
+	//write完毕不可以清除，否则啥也发不出去
+	//serial->clear();
+	//serial->close();
+	//serial->deleteLater();
+
+	//以下这种方式是发不出去的
+	//QString qsCom = "COM1";
+	//QSerialPort m_pSerial ;
+	//m_pSerial.setPortName(qsCom);
+	//以读写方式打开串口  
+	//if (m_pSerial.open(QIODevice::ReadWrite))
+	//{
+	//	设置波特率  
+	//	m_pSerial.setBaudRate(QSerialPort::Baud115200);
+	//	设置数据位  
+	//	m_pSerial.setDataBits(QSerialPort::Data8);
+	//	设置校验位  
+	//	m_pSerial.setParity(QSerialPort::NoParity);
+	//	设置流控制  
+	//	m_pSerial.setFlowControl(QSerialPort::NoFlowControl);
+	//	设置停止位  
+	//	m_pSerial.setStopBits(QSerialPort::OneStop);
+	//	qWarning() << "Open " << qsCom << " OK!";
+	//}
+	//else
+	//{
+	//	qDebug() << "Could not open!" << qsCom;
+	//}
+	//qDebug() << "Thread start!";
+
+	//int i = 5;
+	//while (i--)
+	//{
+	//	m_pSerial.write("5555556666666");
+	//	qDebug() << m_pSerial.error();
+	//}
+}
+
+void UtilGui::OnBtCloseSerialPort()
+{
+	if (serial)
+	{
+		serial->clear();
+		serial->close();
+		serial->deleteLater();
+		serial = nullptr;
+	}
+}
+
+//高速无锁队列
+void UtilGui::OnBtStartQueue()
+{
+#if USE_QRINGBUFFER
+	QRingBuffer buffer;
+
+	cout << "buffer size:" << buffer.size() << endl;
+
+	char data1[48] = { 0x55 };
+	char data2[8] = { 0 };
+	cout << "buffer can read:" << buffer.canRead() << endl;
+	cout << "buffer can write:" << buffer.canWrite() << endl;
+	cout << "buffer writing..." << endl;
+	buffer.write(data1, sizeof(data1));
+	cout << "buffer can read:" << buffer.canRead() << endl;
+	cout << "buffer can write:" << buffer.canWrite() << endl;
+	cout << "buffer reading..." << endl;
+	buffer.read(data2, 8);
+	cout << "buffer can read:" << buffer.canRead() << endl;
+	cout << "buffer can write:" << buffer.canWrite() << endl;
+
+	cout << "HelloWorld!" << endl;
+#else
+	RingBuffer<int> q(5);
+	q.push_back(1);
+	q.push_back(2);
+	q.push_back(3);
+	q.push_back(4);
+	for (int i = 0; i < 4; i++)
+		cout << q.pop_front() << endl;
+	q.push_back(5);
+	q.push_back(5);
+	q.push_back(5);
+	while (!q.isEmpty())//不判空就pop会崩
+	{
+		cout << q.pop_front() << endl;
+	}
+#endif
+
+}
+
+void UtilGui::OnBtStopQueue()
+{
+
 }
