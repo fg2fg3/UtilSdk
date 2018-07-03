@@ -48,6 +48,8 @@ public:
     QPushButton *m_pBtUnzipFile;
     QPushButton *m_pBtStartQueue;
     QPushButton *m_pBtStopQueue;
+    QPushButton *m_pBtQueueSize;
+    QPushButton *m_pBtPrint;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -61,7 +63,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayoutWidget = new QWidget(centralWidget);
         verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(0, 1, 591, 211));
+        verticalLayoutWidget->setGeometry(QRect(0, 1, 591, 246));
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -147,8 +149,18 @@ public:
 
         horizontalLayout_2->addWidget(m_pBtStopQueue);
 
+        m_pBtQueueSize = new QPushButton(verticalLayoutWidget);
+        m_pBtQueueSize->setObjectName(QStringLiteral("m_pBtQueueSize"));
+
+        horizontalLayout_2->addWidget(m_pBtQueueSize);
+
 
         verticalLayout->addLayout(horizontalLayout_2);
+
+        m_pBtPrint = new QPushButton(verticalLayoutWidget);
+        m_pBtPrint->setObjectName(QStringLiteral("m_pBtPrint"));
+
+        verticalLayout->addWidget(m_pBtPrint);
 
         UtilGuiClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(UtilGuiClass);
@@ -182,7 +194,9 @@ public:
         m_pBtZipFile->setText(QApplication::translate("UtilGuiClass", "\345\216\213\347\274\251\346\226\207\344\273\266", 0));
         m_pBtUnzipFile->setText(QApplication::translate("UtilGuiClass", "\350\247\243\345\216\213\346\226\207\344\273\266", 0));
         m_pBtStartQueue->setText(QApplication::translate("UtilGuiClass", "\345\220\257\345\212\250\351\230\237\345\210\227", 0));
-        m_pBtStopQueue->setText(QApplication::translate("UtilGuiClass", "\345\201\234\346\255\242\351\230\237\345\210\227", 0));
+        m_pBtStopQueue->setText(QApplication::translate("UtilGuiClass", "\346\265\213\350\257\225\347\273\223\346\236\204\344\275\223\345\216\213\345\205\245\351\230\237\345\210\227", 0));
+        m_pBtQueueSize->setText(QApplication::translate("UtilGuiClass", "\346\237\245\347\234\213\351\230\237\345\210\227\345\244\247\345\260\217", 0));
+        m_pBtPrint->setText(QApplication::translate("UtilGuiClass", "\346\211\223\345\215\260", 0));
     } // retranslateUi
 
 };

@@ -1,4 +1,4 @@
-#include "UtilGui.h"
+ï»¿#include "UtilGui.h"
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTextCodec>
@@ -15,6 +15,10 @@
 #include <QSqlRecord>
 #include "ringbuffert.h"
 #include "qringbuffer.h"
+#include <QPrinter>
+#include <QPrintDialog>
+#include <QTextDocument>
+#include "cJSON.h"
 
 #define USE_QRINGBUFFER 0
 
@@ -29,12 +33,12 @@ std::string TCHAR2STRING(TCHAR *STR)
 }
 
 /************************************************************************
-*   ¹¦ÄÜ£º½«Ò»¸öÊ®Áù½øÖÆ×Ö½Ú´®×ª»»³É ASCII Âë±íÊ¾µÄÊ®Áù½øÖÆµÄ×Ö·û´®
-*   ÊäÈë²ÎÊı£ºpHex    -- Ê®Áù½øÖÆÊı×Ö½Ú´®Ê×µØÖ·
-*            pAscii -- ×ª»»ºóµÄ ASCII Âë±íÊ¾µÄÊ®Áù½øÖÆ×Ö·û´®µÄÊ×µØÖ·
-*            nLen    -- Òª×ª»»µÄÊ®Áù½øÖÆÊıµÄ³¤¶È£¨×Ö½ÚÊı£©
-*   Êä³ö²ÎÊı£ºNone
-*   ×¢£º  ×ª»»ºóµÄ½á¹ûÈ«²¿ÊÇ´óĞ´ ASCII ±íÊ¾µÄÊ®Áù½øÖÆÊı
+*   åŠŸèƒ½ï¼šå°†ä¸€ä¸ªåå…­è¿›åˆ¶å­—èŠ‚ä¸²è½¬æ¢æˆ ASCII ç è¡¨ç¤ºçš„åå…­è¿›åˆ¶çš„å­—ç¬¦ä¸²
+*   è¾“å…¥å‚æ•°ï¼špHex    -- åå…­è¿›åˆ¶æ•°å­—èŠ‚ä¸²é¦–åœ°å€
+*            pAscii -- è½¬æ¢åçš„ ASCII ç è¡¨ç¤ºçš„åå…­è¿›åˆ¶å­—ç¬¦ä¸²çš„é¦–åœ°å€
+*            nLen    -- è¦è½¬æ¢çš„åå…­è¿›åˆ¶æ•°çš„é•¿åº¦ï¼ˆå­—èŠ‚æ•°ï¼‰
+*   è¾“å‡ºå‚æ•°ï¼šNone
+*   æ³¨ï¼š  è½¬æ¢åçš„ç»“æœå…¨éƒ¨æ˜¯å¤§å†™ ASCII è¡¨ç¤ºçš„åå…­è¿›åˆ¶æ•°
 ************************************************************************/
 void HexToAscii(unsigned char * pHex, unsigned char * pAscii, int nLen)
 {
@@ -59,12 +63,12 @@ void HexToAscii(unsigned char * pHex, unsigned char * pAscii, int nLen)
 }
 
 /****************************************************************************
-*   ¹¦ÄÜ£º½«Ò»¸ö ASCII Âë±íÊ¾µÄÊ®Áù½øÖÆ×Ö·û´®×ª»»³ÉÊ®Áù½øÖÆµÄ×Ö½Ú´®
-*   ÊäÈë²ÎÊı£ºpAscii -- ×ª»»ºóµÄ ASCII Âë±íÊ¾µÄÊ®Áù½øÖÆ×Ö·û´®µÄÊ×µØÖ·
-*            pHex   -- Ê®Áù½øÖÆÊı×Ö½Ú´®Ê×µØÖ·
-*            nLen   -- Òª×ª»»µÄ ASCII Âë±íÊ¾µÄÊ®Áù½øÖÆ×Ö·û´®µÄ³¤¶È£¨×Ö½ÚÊı£©
-*   Êä³ö²ÎÊı£ºNone
-*   ×¢£º  ÒªÇóÊäÈëµÄ ASCII Âë±íÊ¾µÄÊ®Áù½øÖÆÊıµÄ×Ö·û¸öÊı±ØĞëÎªÅ¼Êı£¬³ıÁËÊÇ1 - 9 ºÍ A(a) - F(f) ÒÔÍâÃ»ÓĞ±ğµÄ×Ö·û
+*   åŠŸèƒ½ï¼šå°†ä¸€ä¸ª ASCII ç è¡¨ç¤ºçš„åå…­è¿›åˆ¶å­—ç¬¦ä¸²è½¬æ¢æˆåå…­è¿›åˆ¶çš„å­—èŠ‚ä¸²
+*   è¾“å…¥å‚æ•°ï¼špAscii -- è½¬æ¢åçš„ ASCII ç è¡¨ç¤ºçš„åå…­è¿›åˆ¶å­—ç¬¦ä¸²çš„é¦–åœ°å€
+*            pHex   -- åå…­è¿›åˆ¶æ•°å­—èŠ‚ä¸²é¦–åœ°å€
+*            nLen   -- è¦è½¬æ¢çš„ ASCII ç è¡¨ç¤ºçš„åå…­è¿›åˆ¶å­—ç¬¦ä¸²çš„é•¿åº¦ï¼ˆå­—èŠ‚æ•°ï¼‰
+*   è¾“å‡ºå‚æ•°ï¼šNone
+*   æ³¨ï¼š  è¦æ±‚è¾“å…¥çš„ ASCII ç è¡¨ç¤ºçš„åå…­è¿›åˆ¶æ•°çš„å­—ç¬¦ä¸ªæ•°å¿…é¡»ä¸ºå¶æ•°ï¼Œé™¤äº†æ˜¯1 - 9 å’Œ A(a) - F(f) ä»¥å¤–æ²¡æœ‰åˆ«çš„å­—ç¬¦
 ****************************************************************************/
 void AsciiToHex(unsigned char * pAscii, unsigned char * pHex, int nLen)
 {
@@ -96,9 +100,9 @@ void AsciiToHex(unsigned char * pAscii, unsigned char * pHex, int nLen)
 void string2tchar(std::string &src, TCHAR* buf)
 {
 #ifdef UNICODE  
-	_stprintf_s(buf, MAX_PATH, _T("%S"), src.c_str());//%S¿í×Ö·û  
+	_stprintf_s(buf, MAX_PATH, _T("%S"), src.c_str());//%Så®½å­—ç¬¦  
 #else  
-	_stprintf_s(buf, MAX_PATH, _T("%s"), src.c_str());//%sµ¥×Ö·û
+	_stprintf_s(buf, MAX_PATH, _T("%s"), src.c_str());//%så•å­—ç¬¦
 #endif
 }
 
@@ -142,6 +146,9 @@ void UtilGui::PrepareSlot()
 	connect(ui.m_pBtCloseSerialPort, SIGNAL(clicked()), this, SLOT(OnBtCloseSerialPort()));
 	connect(ui.m_pBtStartQueue, SIGNAL(clicked()), this, SLOT(OnBtStartQueue()));
 	connect(ui.m_pBtStopQueue, SIGNAL(clicked()), this, SLOT(OnBtStopQueue()));
+	connect(ui.m_pBtQueueSize, SIGNAL(clicked()), this, SLOT(OnBtQueueSize()));
+	connect(ui.m_pBtPrint, SIGNAL(clicked()), this, SLOT(OnBtPrint()));
+	connect(ui.m_pBtJson2Db, SIGNAL(clicked()), this, SLOT(OnBtJson2Db()));
 }
 
 void UtilGui::OnBtChineseSupportClicked()
@@ -150,23 +157,23 @@ void UtilGui::OnBtChineseSupportClicked()
 
 	ui.m_pLbPath->setText(qslPath);
 
-	QTextCodec *code = QTextCodec::codecForName("GB2312");//½â¾öÖĞÎÄÂ·¾¶ÎÊÌâ  
+	QTextCodec *code = QTextCodec::codecForName("GB2312");//è§£å†³ä¸­æ–‡è·¯å¾„é—®é¢˜  
 	std::string name = code->fromUnicode(qslPath).data();
 
 	FILE* fp = fopen(name.c_str(), "r");
 	if (fp == nullptr)
 	{
-		QMessageBox::warning(this, "ÌáĞÑ", qslPath);
+		QMessageBox::warning(this, "æé†’", qslPath);
 	}
 	fclose(fp);
 }
 
 void UtilGui::OnBtCompareClicked()
 {
-	//×Ö·û±È½Ï
+	//å­—ç¬¦æ¯”è¾ƒ
 	char a[] = "abc";
 	char b[] = "bbc";
-	if (a[1] == b[1])//×Ö·û±È½Ï
+	if (a[1] == b[1])//å­—ç¬¦æ¯”è¾ƒ
 	{
 		qDebug() << "Same";
 	}
@@ -175,11 +182,11 @@ void UtilGui::OnBtCompareClicked()
 		qDebug() << "not same";
 	}
 
-	//ÁíÍâµÄ±È½Ï·½Ê½
+	//å¦å¤–çš„æ¯”è¾ƒæ–¹å¼
 	char c[] = { 0x00, 0x01, 0x03, 0x04 };
 	char d[] = { 0x00, 0x01, 0x03, 0x05 };
 	int t1 = 0, t2 = 0;
-	memcpy((char*)&t1, c, 4);//4¿ÉÒÔ»»Îª3µÈÈÎÒâ³¤¶Èµ«ÊÇ²»¿ÉÒÔ³¬¹ıt1µÄ³¤¶È
+	memcpy((char*)&t1, c, 4);//4å¯ä»¥æ¢ä¸º3ç­‰ä»»æ„é•¿åº¦ä½†æ˜¯ä¸å¯ä»¥è¶…è¿‡t1çš„é•¿åº¦
 	memcpy((char*)&t2, d, 4);
 	if (t1 == t2)
 	{
@@ -199,7 +206,7 @@ void UtilGui::OnBtJoyStickClicked()
 
 void UtilGui::closeEvent(QCloseEvent *event)
 {
-//	QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("¹Ø±ÕÖĞ!"));
+//	QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("å…³é—­ä¸­!"));
 	if (serial != nullptr)
 	{
 		serial->clear();
@@ -266,9 +273,19 @@ void UtilGui::OnBtUnzipFileClicked()
 	CloseZip(hz);
 }
 
+char* UnicodeToUtf8(const wchar_t* unicode)
+{
+	int len;
+	len = WideCharToMultiByte(CP_UTF8, 0, unicode, -1, NULL, 0, NULL, NULL);
+	char *szUtf8 = (char*)malloc(len + 1);
+	memset(szUtf8, 0, len + 1);
+	WideCharToMultiByte(CP_UTF8, 0, unicode, -1, szUtf8, len, NULL, NULL);
+	return szUtf8;
+}
+
 void UtilGui::OnBtSqliteClicked()
 {
-	//Ê×ÏÈ½¨Á¢util.dbÊı¾İ¿â²¢ÓÃnavicatmysql³õÊ¼»¯
+	//é¦–å…ˆå»ºç«‹util.dbæ•°æ®åº“å¹¶ç”¨navicatmysqlåˆå§‹åŒ–
 	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
 
 	db.setDatabaseName("./testdatabase.db");
@@ -446,7 +463,6 @@ void UtilGui::OnBtSqliteClicked()
 	else
 		qDebug("Deleted!");
 
-
 	db.close();
 }
 
@@ -461,13 +477,13 @@ void UtilGui::OnBtHexString()
 void UtilGui::OnBtSerialPort()
 {
 
-	//ÉèÖÃ´®¿ÚÃû
+	//è®¾ç½®ä¸²å£å
 	serial->setPortName("COM1");
-	//´ò¿ª´®¿Ú
+	//æ‰“å¼€ä¸²å£
 	serial->open(QIODevice::ReadWrite);
-	//ÉèÖÃ²¨ÌØÂÊ
+	//è®¾ç½®æ³¢ç‰¹ç‡
 	serial->setBaudRate(115200);
-	//ÉèÖÃÊı¾İÎ»
+	//è®¾ç½®æ•°æ®ä½
 	serial->setDataBits(QSerialPort::Data8);
 	serial->setParity(QSerialPort::NoParity);
 	serial->setStopBits(QSerialPort::OneStop);
@@ -476,27 +492,27 @@ void UtilGui::OnBtSerialPort()
 	serial->write("222222");
 	serial->write("333333");
 	serial->write(cmd);
-	//writeÍê±Ï²»¿ÉÒÔÇå³ı£¬·ñÔòÉ¶Ò²·¢²»³öÈ¥
+	//writeå®Œæ¯•ä¸å¯ä»¥æ¸…é™¤ï¼Œå¦åˆ™å•¥ä¹Ÿå‘ä¸å‡ºå»
 	//serial->clear();
 	//serial->close();
 	//serial->deleteLater();
 
-	//ÒÔÏÂÕâÖÖ·½Ê½ÊÇ·¢²»³öÈ¥µÄ
+	//ä»¥ä¸‹è¿™ç§æ–¹å¼æ˜¯å‘ä¸å‡ºå»çš„
 	//QString qsCom = "COM1";
 	//QSerialPort m_pSerial ;
 	//m_pSerial.setPortName(qsCom);
-	//ÒÔ¶ÁĞ´·½Ê½´ò¿ª´®¿Ú  
+	//ä»¥è¯»å†™æ–¹å¼æ‰“å¼€ä¸²å£  
 	//if (m_pSerial.open(QIODevice::ReadWrite))
 	//{
-	//	ÉèÖÃ²¨ÌØÂÊ  
+	//	è®¾ç½®æ³¢ç‰¹ç‡  
 	//	m_pSerial.setBaudRate(QSerialPort::Baud115200);
-	//	ÉèÖÃÊı¾İÎ»  
+	//	è®¾ç½®æ•°æ®ä½  
 	//	m_pSerial.setDataBits(QSerialPort::Data8);
-	//	ÉèÖÃĞ£ÑéÎ»  
+	//	è®¾ç½®æ ¡éªŒä½  
 	//	m_pSerial.setParity(QSerialPort::NoParity);
-	//	ÉèÖÃÁ÷¿ØÖÆ  
+	//	è®¾ç½®æµæ§åˆ¶  
 	//	m_pSerial.setFlowControl(QSerialPort::NoFlowControl);
-	//	ÉèÖÃÍ£Ö¹Î»  
+	//	è®¾ç½®åœæ­¢ä½  
 	//	m_pSerial.setStopBits(QSerialPort::OneStop);
 	//	qWarning() << "Open " << qsCom << " OK!";
 	//}
@@ -525,7 +541,7 @@ void UtilGui::OnBtCloseSerialPort()
 	}
 }
 
-//¸ßËÙÎŞËø¶ÓÁĞ
+//é«˜é€Ÿæ— é”é˜Ÿåˆ—
 void UtilGui::OnBtStartQueue()
 {
 #if USE_QRINGBUFFER
@@ -558,7 +574,7 @@ void UtilGui::OnBtStartQueue()
 	q.push_back(5);
 	q.push_back(5);
 	q.push_back(5);
-	while (!q.isEmpty())//²»ÅĞ¿Õ¾Ípop»á±À
+	while (!q.isEmpty())//ä¸åˆ¤ç©ºå°±popä¼šå´©
 	{
 		cout << q.pop_front() << endl;
 	}
@@ -566,7 +582,78 @@ void UtilGui::OnBtStartQueue()
 
 }
 
+MyClass::MyClass()
+{
+	qDebug() << "Has inited!";
+}
+
+MyClass::~MyClass()
+{
+	qDebug() << "Ready to delete this!";
+}
+
+
+
 void UtilGui::OnBtStopQueue()
 {
+	MyClass my;	
+	vecMy.push_back(my);
+	vecMy.push_back(my);
+	vecMy.push_back(my);
+	qDebug() << "Vector size is " << vecMy.size();
+	//vectorç­‰å‹å…¥çš„æ—¶å€™æ˜¯æ‹·è´ï¼Œä¹‹å‰çš„myç»“æ„ä½“åœ¨å‡ºå‡½æ•°åå°±é‡Šæ”¾äº†
+}
 
+void UtilGui::OnBtQueueSize()
+{
+	qDebug() << "Vector size is " << vecMy.size();//æ­¤å¤„å¾—åˆ°æ˜¯3ï¼Œå› ä¸ºä¸Šä¸ªå‡½æ•°å‹å…¥äº†3ä¸ªæ•°æ®
+	vecMy.clear();
+}
+
+void UtilGui::OnBtPrint()
+{
+	QPrinter printer(QPrinter::HighResolution);
+	printer.setPageSize(QPagedPaintDevice::A4);
+	QPrintDialog printDialog(&printer, this);
+	if (printDialog.exec()){
+		QTextDocument textDocument;
+		textDocument.print(&printer);
+	}
+}
+
+void UtilGui::OnBtJson2Db()
+{
+	//é¦–å…ˆå»ºç«‹util.dbæ•°æ®åº“å¹¶ç”¨navicatmysqlåˆå§‹åŒ–å­—æ®µ
+	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+
+	db.setDatabaseName("./testdatabase.db");
+
+	if (!db.open())
+	{
+		qDebug() << db.lastError();
+		qFatal("Failed to connect.");
+	}
+
+	qDebug("Connected!");
+
+	QSqlQuery qry;
+
+	std::string sRet = QString::fromWCharArray(L"æ±‰å­—").toStdString();
+
+	//ä½¿ç”¨Cjsonçœ‹çœ‹æ•ˆæœ,å¦‚ä¸‹æ–¹å¼å†™å…¥æ•°æ®åº“ä¹Ÿæ˜¯å¯ä»¥çš„,jsoncpp-1.8.4ä¼šæŠŠä¸­æ–‡å­—ç¬¦è½¬ä¸ºUnicodeä¿å­˜ï¼Œåœ¨utf8çš„æ•°æ®åº“é‡Œä¸å¯ç›´æ¥è¯»å‡º
+	cJSON *base = cJSON_CreateObject();
+	cJSON_AddStringToObject(base, "BS", "-1");
+	cJSON_AddStringToObject(base, "Msg", UnicodeToUtf8(L"æ“ä½œæˆåŠŸï¼"));
+	char *str = cJSON_Print(base);
+
+	char buf[1024] = "\0";
+	memset(buf, 0, 1024);
+	sprintf(buf, "INSERT INTO names (id,firstname) VALUES (10,'%s')", str);
+	qry.prepare(QString(buf));
+	if (!qry.exec())
+		qDebug() << qry.lastError();
+	else
+		qDebug() << "Insert Ok! ";
+
+	db.close();
 }

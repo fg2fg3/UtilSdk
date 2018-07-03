@@ -20,7 +20,7 @@
       <x>0</x>
       <y>1</y>
       <width>591</width>
-      <height>211</height>
+      <height>248</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -89,11 +89,22 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="m_pBtSqlite">
-       <property name="text">
-        <string>测试sqlite</string>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QPushButton" name="m_pBtSqlite">
+         <property name="text">
+          <string>测试sqlite</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="m_pBtJson2Db">
+         <property name="text">
+          <string>Json中文压入数据库</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -121,11 +132,25 @@
        <item>
         <widget class="QPushButton" name="m_pBtStopQueue">
          <property name="text">
-          <string>停止队列</string>
+          <string>测试结构体压入队列</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="m_pBtQueueSize">
+         <property name="text">
+          <string>查看队列大小</string>
          </property>
         </widget>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="m_pBtPrint">
+       <property name="text">
+        <string>打印</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>

@@ -4,6 +4,7 @@
 #include "ui_UtilGui.h"
 #include "JoyStickDialog.h"
 
+class MyClass;
 class UtilGui : public QMainWindow
 {
 	Q_OBJECT
@@ -13,7 +14,8 @@ public:
 
 private:
 	Ui::UtilGuiClass ui;
-	QSerialPort *serial;
+	QSerialPort *serial; 
+	std::vector<MyClass> vecMy;
 
 	void PrepareSlot();
 	void PrepareStyle();
@@ -33,7 +35,20 @@ private slots:
 	void OnBtCloseSerialPort();
 	void OnBtStartQueue();
 	void OnBtStopQueue();
+	void OnBtQueueSize();
+	void OnBtPrint();
+	void OnBtJson2Db();
 
 protected:
 	void closeEvent(QCloseEvent *event);
+};
+
+class MyClass
+{
+public:
+	MyClass();
+	~MyClass();
+
+private:
+
 };
