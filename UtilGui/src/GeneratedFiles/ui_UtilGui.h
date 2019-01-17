@@ -42,7 +42,9 @@ public:
     QPushButton *m_pBtCloseSerialPort;
     QPushButton *m_pBtJoyStick;
     QPushButton *m_pBtOpencvDemo;
+    QHBoxLayout *horizontalLayout_4;
     QPushButton *m_pBtSqlite;
+    QPushButton *m_pBtJson2Db;
     QHBoxLayout *horizontalLayout_2;
     QPushButton *m_pBtZipFile;
     QPushButton *m_pBtUnzipFile;
@@ -50,6 +52,10 @@ public:
     QPushButton *m_pBtStopQueue;
     QPushButton *m_pBtQueueSize;
     QPushButton *m_pBtPrint;
+    QPushButton *m_pBtWeb;
+    QHBoxLayout *horizontalLayout_5;
+    QPushButton *m_pBtStartThread;
+    QPushButton *m_pBtStopThread;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -63,7 +69,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayoutWidget = new QWidget(centralWidget);
         verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(0, 1, 591, 246));
+        verticalLayoutWidget->setGeometry(QRect(0, 1, 591, 320));
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -121,10 +127,21 @@ public:
 
         verticalLayout->addWidget(m_pBtOpencvDemo);
 
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setSpacing(6);
+        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
         m_pBtSqlite = new QPushButton(verticalLayoutWidget);
         m_pBtSqlite->setObjectName(QStringLiteral("m_pBtSqlite"));
 
-        verticalLayout->addWidget(m_pBtSqlite);
+        horizontalLayout_4->addWidget(m_pBtSqlite);
+
+        m_pBtJson2Db = new QPushButton(verticalLayoutWidget);
+        m_pBtJson2Db->setObjectName(QStringLiteral("m_pBtJson2Db"));
+
+        horizontalLayout_4->addWidget(m_pBtJson2Db);
+
+
+        verticalLayout->addLayout(horizontalLayout_4);
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setSpacing(6);
@@ -162,6 +179,27 @@ public:
 
         verticalLayout->addWidget(m_pBtPrint);
 
+        m_pBtWeb = new QPushButton(verticalLayoutWidget);
+        m_pBtWeb->setObjectName(QStringLiteral("m_pBtWeb"));
+
+        verticalLayout->addWidget(m_pBtWeb);
+
+        horizontalLayout_5 = new QHBoxLayout();
+        horizontalLayout_5->setSpacing(6);
+        horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
+        m_pBtStartThread = new QPushButton(verticalLayoutWidget);
+        m_pBtStartThread->setObjectName(QStringLiteral("m_pBtStartThread"));
+
+        horizontalLayout_5->addWidget(m_pBtStartThread);
+
+        m_pBtStopThread = new QPushButton(verticalLayoutWidget);
+        m_pBtStopThread->setObjectName(QStringLiteral("m_pBtStopThread"));
+
+        horizontalLayout_5->addWidget(m_pBtStopThread);
+
+
+        verticalLayout->addLayout(horizontalLayout_5);
+
         UtilGuiClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(UtilGuiClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -191,12 +229,16 @@ public:
         m_pBtJoyStick->setText(QApplication::translate("UtilGuiClass", "\346\270\270\346\210\217\346\211\213\346\237\204", 0));
         m_pBtOpencvDemo->setText(QApplication::translate("UtilGuiClass", "OpenCV\345\212\237\350\203\275\346\265\213\350\257\225-\344\275\277\347\224\2502.4.11", 0));
         m_pBtSqlite->setText(QApplication::translate("UtilGuiClass", "\346\265\213\350\257\225sqlite", 0));
+        m_pBtJson2Db->setText(QApplication::translate("UtilGuiClass", "Json\344\270\255\346\226\207\345\216\213\345\205\245\346\225\260\346\215\256\345\272\223", 0));
         m_pBtZipFile->setText(QApplication::translate("UtilGuiClass", "\345\216\213\347\274\251\346\226\207\344\273\266", 0));
         m_pBtUnzipFile->setText(QApplication::translate("UtilGuiClass", "\350\247\243\345\216\213\346\226\207\344\273\266", 0));
         m_pBtStartQueue->setText(QApplication::translate("UtilGuiClass", "\345\220\257\345\212\250\351\230\237\345\210\227", 0));
         m_pBtStopQueue->setText(QApplication::translate("UtilGuiClass", "\346\265\213\350\257\225\347\273\223\346\236\204\344\275\223\345\216\213\345\205\245\351\230\237\345\210\227", 0));
         m_pBtQueueSize->setText(QApplication::translate("UtilGuiClass", "\346\237\245\347\234\213\351\230\237\345\210\227\345\244\247\345\260\217", 0));
         m_pBtPrint->setText(QApplication::translate("UtilGuiClass", "\346\211\223\345\215\260", 0));
+        m_pBtWeb->setText(QApplication::translate("UtilGuiClass", "\346\211\223\345\274\200QtWeb", 0));
+        m_pBtStartThread->setText(QApplication::translate("UtilGuiClass", "\345\274\200\345\220\257\347\272\277\347\250\213", 0));
+        m_pBtStopThread->setText(QApplication::translate("UtilGuiClass", "\345\201\234\346\255\242\347\272\277\347\250\213", 0));
     } // retranslateUi
 
 };

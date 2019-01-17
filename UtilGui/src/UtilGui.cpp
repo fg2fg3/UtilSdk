@@ -19,8 +19,13 @@
 #include <QPrintDialog>
 #include <QTextDocument>
 #include "cJSON.h"
+#include "WebDialog.h"
+#include <stdlib.h> 
+#include <stdio.h> 
 
 #define USE_QRINGBUFFER 0
+
+#define ENABLE_ZMQ 1
 
 std::string TCHAR2STRING(TCHAR *STR)
 {
@@ -97,6 +102,76 @@ void AsciiToHex(unsigned char * pAscii, unsigned char * pHex, int nLen)
 	}   // for (int i = ...)
 }
 
+#include <stdio.h>
+#include <string.h>
+
+//字符转换成整形
+int hex2int(char c)
+{
+	if ((c >= 'A') && (c <= 'Z'))
+	{
+		return c - 'A' + 10;
+	}
+	else if ((c >= 'a') && (c <= 'z'))
+	{
+		return c - 'a' + 10;
+	}
+	else if ((c >= '0') && (c <= '9'))
+	{
+		return c - '0';
+	}
+}
+
+int HexString2int(QString qsHex)
+{
+	//十六进制字符串转换成整形
+	const char* hexStr = qsHex.toStdString().c_str();
+	int data[32] = { 0 };
+	int count = 0;
+	for (int i = 0; i<strlen(hexStr); i += 2)
+	{
+		int high = hex2int(hexStr[i]);   //高四位
+		int low = hex2int(hexStr[i + 1]); //低四位
+		data[count++] = (high << 4) + low;
+	}
+	//打印输出
+	for (int i = 0; i<strlen(hexStr) / 2; i++)
+	{
+		printf("%d ", data[i]);
+	}
+	return 1;
+}
+//void convertStringToHex(const QString &str, QByteArray &byteData) 
+//{
+//	int hexdata, lowhexdata; 
+//	int hexdatalen = 0; 
+//	int len = str.length(); 
+//	byteData.resize(len / 2); 
+//	char lstr, hstr;
+//	for (int i = 0; i<len;) 
+//	{ //char lstr, 
+//		hstr=str[i].toLatin1(); 
+//		if(hstr == ' ') 
+//		{ 
+//			i++; 
+//			continue; 
+//		} 
+//		i++; 
+//		if(i >= len) break; 
+//		lstr = str[i].toLatin1(); 
+//		hexdata = convertCharToHex(hstr); 
+//		lowhexdata = convertCharToHex(lstr); 
+//		if((hexdata == 16) || (lowhexdata == 16)) 
+//			break; 
+//		else hexdata = hexdata*16+lowhexdata; 
+//		i++; 
+//		byteData[hexdatalen] = (char)hexdata; 
+//		hexdatalen++; 
+//	} byteData.resize(hexdatalen); 
+//}
+
+
+
 void string2tchar(std::string &src, TCHAR* buf)
 {
 #ifdef UNICODE  
@@ -149,6 +224,9 @@ void UtilGui::PrepareSlot()
 	connect(ui.m_pBtQueueSize, SIGNAL(clicked()), this, SLOT(OnBtQueueSize()));
 	connect(ui.m_pBtPrint, SIGNAL(clicked()), this, SLOT(OnBtPrint()));
 	connect(ui.m_pBtJson2Db, SIGNAL(clicked()), this, SLOT(OnBtJson2Db()));
+	connect(ui.m_pBtWeb, SIGNAL(clicked()), this, SLOT(OnBtWeb()));
+	connect(ui.m_pBtStartThread, SIGNAL(clicked()), this, SLOT(OnBtStartThreadClicked()));
+	connect(ui.m_pBtStopThread, SIGNAL(clicked()), this, SLOT(OnBtStopThreadClicked()));
 }
 
 void UtilGui::OnBtChineseSupportClicked()
@@ -468,15 +546,17 @@ void UtilGui::OnBtSqliteClicked()
 
 void UtilGui::OnBtHexString()
 {
-	unsigned char hex[5] = { 0x23, 0x3A, 0x46, 0x4C, 0x52 };
-	unsigned char hexString[10] = { 0 };
-	HexToAscii(hex, hexString, 5);
-	HexToAscii(hex, hexString, 10);
+	unsigned char hex[8] = { 0x02, 0x01, 0x27, 0x77, 0x13, 0x01, 0x10, 0x01 };
+	//目标是转化成1.01.03.19.01.16.01(头两个数据不转化）
+	unsigned char hex2String[16] = { 0 };
+	HexToAscii(hex, hex2String, 8);
+	QString qsHex = QString((char*)hex2String);
+	int nHead = qsHex.mid(4, 4).toInt(0, 16);//请注意16进制转10进制可以修改toInt()中的第二个参数base
+	QString qsVer = QString::number(nHead / 10000) + "." + QString::number((nHead % 10000) / 100) + "." + QString::number(nHead % 100);
 }
 
 void UtilGui::OnBtSerialPort()
 {
-
 	//设置串口名
 	serial->setPortName("COM1");
 	//打开串口
@@ -582,18 +662,6 @@ void UtilGui::OnBtStartQueue()
 
 }
 
-MyClass::MyClass()
-{
-	qDebug() << "Has inited!";
-}
-
-MyClass::~MyClass()
-{
-	qDebug() << "Ready to delete this!";
-}
-
-
-
 void UtilGui::OnBtStopQueue()
 {
 	MyClass my;	
@@ -656,4 +724,202 @@ void UtilGui::OnBtJson2Db()
 		qDebug() << "Insert Ok! ";
 
 	db.close();
+}
+
+void UtilGui::OnBtWeb()
+{
+	WebDialog dlg;//其实是一个widget
+	dlg.exec();
+}
+
+//
+//MyClass定义
+//
+MyClass::MyClass()
+{
+	m_bClose = false;
+	qDebug() << "Has inited!";
+}
+
+MyClass::~MyClass()
+{
+	qDebug() << "Ready to delete this!";
+}
+
+DWORD WINAPI ClientThread(LPVOID lpParam)
+{
+	MyClass* pObject = (MyClass*)lpParam;
+	if(ENABLE_ZMQ)
+	{
+		printf("Use zmq");//包含zmq的头文件 
+
+		void * pCtx = NULL;
+		void * pSock = NULL;
+		//使用tcp协议进行通信，需要连接的目标机器IP地址为192.168.1.2
+		//通信使用的网络端口 为7766 
+		const char * pAddr = "tcp://127.0.0.1:7766";
+
+		//创建context 
+		if ((pCtx = zmq_ctx_new()) == NULL)
+		{
+			return 0;
+		}
+		//创建socket 
+		if ((pSock = zmq_socket(pCtx, ZMQ_DEALER)) == NULL)
+		{
+			zmq_ctx_destroy(pCtx);
+			return 0;
+		}
+		int iSndTimeout = 5000;// millsecond
+		//设置接收超时 
+		if (zmq_setsockopt(pSock, ZMQ_RCVTIMEO, &iSndTimeout, sizeof(iSndTimeout)) < 0)
+		{
+			zmq_close(pSock);
+			zmq_ctx_destroy(pCtx);
+			return 0;
+		}
+		//连接目标IP192.168.1.2，端口7766 
+		if (zmq_connect(pSock, pAddr) < 0)
+		{
+			zmq_close(pSock);
+			zmq_ctx_destroy(pCtx);
+			return 0;
+		}
+		//循环发送消息 
+		while (1)
+		{
+			static int i = 0;
+			char szMsg[1024] = { 0 };
+			sprintf(szMsg, "hello world : %3d", i++);
+			printf("Enter to send...\n");
+			if (zmq_send(pSock, szMsg, sizeof(szMsg), 0) < 0)
+			{
+				fprintf(stderr, "send message faild\n");
+				continue;
+			}
+			printf("send message : [%s] succeed\n", szMsg);
+			//getchar();用于获取界面输入，输入enter发送一次消息
+			Sleep(1000);
+		}
+
+		return 0;
+	}
+	else
+	{
+		while (pObject != nullptr && pObject->isClose() != true)
+		{
+			pObject->ProcClient();
+			Sleep(1000);
+		}
+	}
+	return true;
+}
+
+DWORD WINAPI ServerThread(LPVOID lpParam)
+{
+	MyClass* pObject = (MyClass*)lpParam;
+	if(ENABLE_ZMQ)
+	{
+		printf("Use zmq");
+	
+		void * pCtx = NULL;
+		void * pSock = NULL;
+		const char * pAddr = "tcp://*:7766";
+
+		//创建context，zmq的socket 需要在context上进行创建 
+		if ((pCtx = zmq_ctx_new()) == NULL)
+		{
+			return 0;
+		}
+		//创建zmq socket ，socket目前有6中属性 ，这里使用dealer方式
+		//具体使用方式请参考zmq官方文档（zmq手册） 
+		if ((pSock = zmq_socket(pCtx, ZMQ_DEALER)) == NULL)
+		{
+			zmq_ctx_destroy(pCtx);
+			return 0;
+		}
+		int iRcvTimeout = 5000;// millsecond
+		//设置zmq的接收超时时间为5秒 
+		if (zmq_setsockopt(pSock, ZMQ_RCVTIMEO, &iRcvTimeout, sizeof(iRcvTimeout)) < 0)
+		{
+			zmq_close(pSock);
+			zmq_ctx_destroy(pCtx);
+			return 0;
+		}
+		//绑定地址 tcp://*:7766 
+		//也就是使用tcp协议进行通信，使用网络端口 7766
+		if (zmq_bind(pSock, pAddr) < 0)
+		{
+			zmq_close(pSock);
+			zmq_ctx_destroy(pCtx);
+			return 0;
+		}
+		printf("bind at : %s\n", pAddr);
+		while (1)
+		{
+			char szMsg[1024] = { 0 };
+			printf("waitting...\n");
+			errno = 0;
+			//循环等待接收到来的消息，当超过5秒没有接到消息时，
+			//zmq_recv函数返回错误信息 ，并使用zmq_strerror函数进行错误定位 
+			if (zmq_recv(pSock, szMsg, sizeof(szMsg), 0) < 0)
+			{
+				printf("error = %s\n", zmq_strerror(errno));
+				continue;
+			}
+			printf("received message : %s\n", szMsg);
+		}
+
+		return 0;
+	}
+	else
+	{
+		while (pObject != nullptr && pObject->isClose() != true)
+		{
+			pObject->ProcServer();
+			Sleep(1000);
+		}
+	}
+	return true;
+}
+
+void MyClass::ProcClient()
+{
+	printf("Client is running...\n");
+}
+
+void MyClass::ProcServer()
+{
+	printf("Server is running...\n");
+}
+
+void UtilGui::OnBtStartThreadClicked()
+{
+	m_pServer = new MyClass();
+	hThreadServer = CreateThread(NULL, 0, ServerThread, m_pServer, 0, &dwServerTrdId);
+	printf("Thread server start:%d!\n",dwServerTrdId);
+	Sleep(2);
+
+	m_pClient = new MyClass();
+	hThreadClient = CreateThread(NULL, 0,ClientThread, m_pClient, 0, &dwClientTrdId);
+	printf("Thread client start:%d!\n", dwClientTrdId);
+}
+
+void UtilGui::OnBtStopThreadClicked()
+{
+	printf("Thread end!");
+	std::cout << "Thread end!" << std::endl;
+
+	if(hThreadServer != nullptr)
+	{
+		m_pServer->Stop();
+		CloseHandle(hThreadServer);
+		hThreadServer = nullptr;
+	}
+	if (hThreadClient != nullptr)
+	{
+		m_pClient->Stop();
+		CloseHandle(hThreadClient);
+		hThreadClient = nullptr;
+	}
 }

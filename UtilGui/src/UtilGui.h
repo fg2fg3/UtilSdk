@@ -1,8 +1,13 @@
 #pragma once
 
+#include "zmq.h"
+#include "zmq_utils.h"
 #include <QtWidgets/QMainWindow>
 #include "ui_UtilGui.h"
 #include "JoyStickDialog.h"
+#include <string.h>
+#include <stdio.h>
+//#include <unistd.h>
 
 class MyClass;
 class UtilGui : public QMainWindow
@@ -16,6 +21,12 @@ private:
 	Ui::UtilGuiClass ui;
 	QSerialPort *serial; 
 	std::vector<MyClass> vecMy;
+	HANDLE hThreadClient;
+	HANDLE hThreadServer;
+	DWORD  dwClientTrdId;
+	DWORD  dwServerTrdId;
+	MyClass* m_pServer;
+	MyClass* m_pClient;
 
 	void PrepareSlot();
 	void PrepareStyle();
@@ -38,6 +49,9 @@ private slots:
 	void OnBtQueueSize();
 	void OnBtPrint();
 	void OnBtJson2Db();
+	void OnBtWeb();
+	void OnBtStartThreadClicked();
+	void OnBtStopThreadClicked();
 
 protected:
 	void closeEvent(QCloseEvent *event);
@@ -48,7 +62,21 @@ class MyClass
 public:
 	MyClass();
 	~MyClass();
+	bool isClose(){
+		return m_bClose;
+	}
 
+	void Stop(){ m_bClose = true; }
+
+	void ProcClient();
+	void ProcServer();
+
+
+	void* m_hSvrContext;
+	void* m_hResponser;
+
+	void* m_hClientContext;
+	void* m_hRequest;
 private:
-
+	bool m_bClose;
 };

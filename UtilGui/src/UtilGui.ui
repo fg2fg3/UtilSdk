@@ -20,7 +20,7 @@
       <x>0</x>
       <y>1</y>
       <width>591</width>
-      <height>248</height>
+      <height>320</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -151,6 +151,31 @@
         <string>打印</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="m_pBtWeb">
+       <property name="text">
+        <string>打开QtWeb</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <widget class="QPushButton" name="m_pBtStartThread">
+         <property name="text">
+          <string>开启线程</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="m_pBtStopThread">
+         <property name="text">
+          <string>停止线程</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </widget>

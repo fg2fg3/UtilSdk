@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_UtilGui_t {
-    QByteArrayData data[16];
-    char stringdata0[256];
+    QByteArrayData data[20];
+    char stringdata0[321];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -44,7 +44,11 @@ QT_MOC_LITERAL(11, 183, 19), // "OnBtCloseSerialPort"
 QT_MOC_LITERAL(12, 203, 14), // "OnBtStartQueue"
 QT_MOC_LITERAL(13, 218, 13), // "OnBtStopQueue"
 QT_MOC_LITERAL(14, 232, 13), // "OnBtQueueSize"
-QT_MOC_LITERAL(15, 246, 9) // "OnBtPrint"
+QT_MOC_LITERAL(15, 246, 9), // "OnBtPrint"
+QT_MOC_LITERAL(16, 256, 11), // "OnBtJson2Db"
+QT_MOC_LITERAL(17, 268, 7), // "OnBtWeb"
+QT_MOC_LITERAL(18, 276, 22), // "OnBtStartThreadClicked"
+QT_MOC_LITERAL(19, 299, 21) // "OnBtStopThreadClicked"
 
     },
     "UtilGui\0OnBtChineseSupportClicked\0\0"
@@ -53,7 +57,9 @@ QT_MOC_LITERAL(15, 246, 9) // "OnBtPrint"
     "OnBtUnzipFileClicked\0OnBtSqliteClicked\0"
     "OnBtHexString\0OnBtSerialPort\0"
     "OnBtCloseSerialPort\0OnBtStartQueue\0"
-    "OnBtStopQueue\0OnBtQueueSize\0OnBtPrint"
+    "OnBtStopQueue\0OnBtQueueSize\0OnBtPrint\0"
+    "OnBtJson2Db\0OnBtWeb\0OnBtStartThreadClicked\0"
+    "OnBtStopThreadClicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -63,7 +69,7 @@ static const uint qt_meta_data_UtilGui[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      14,   14, // methods
+      18,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -71,22 +77,30 @@ static const uint qt_meta_data_UtilGui[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   84,    2, 0x08 /* Private */,
-       3,    0,   85,    2, 0x08 /* Private */,
-       4,    0,   86,    2, 0x08 /* Private */,
-       5,    0,   87,    2, 0x08 /* Private */,
-       6,    0,   88,    2, 0x08 /* Private */,
-       7,    0,   89,    2, 0x08 /* Private */,
-       8,    0,   90,    2, 0x08 /* Private */,
-       9,    0,   91,    2, 0x08 /* Private */,
-      10,    0,   92,    2, 0x08 /* Private */,
-      11,    0,   93,    2, 0x08 /* Private */,
-      12,    0,   94,    2, 0x08 /* Private */,
-      13,    0,   95,    2, 0x08 /* Private */,
-      14,    0,   96,    2, 0x08 /* Private */,
-      15,    0,   97,    2, 0x08 /* Private */,
+       1,    0,  104,    2, 0x08 /* Private */,
+       3,    0,  105,    2, 0x08 /* Private */,
+       4,    0,  106,    2, 0x08 /* Private */,
+       5,    0,  107,    2, 0x08 /* Private */,
+       6,    0,  108,    2, 0x08 /* Private */,
+       7,    0,  109,    2, 0x08 /* Private */,
+       8,    0,  110,    2, 0x08 /* Private */,
+       9,    0,  111,    2, 0x08 /* Private */,
+      10,    0,  112,    2, 0x08 /* Private */,
+      11,    0,  113,    2, 0x08 /* Private */,
+      12,    0,  114,    2, 0x08 /* Private */,
+      13,    0,  115,    2, 0x08 /* Private */,
+      14,    0,  116,    2, 0x08 /* Private */,
+      15,    0,  117,    2, 0x08 /* Private */,
+      16,    0,  118,    2, 0x08 /* Private */,
+      17,    0,  119,    2, 0x08 /* Private */,
+      18,    0,  120,    2, 0x08 /* Private */,
+      19,    0,  121,    2, 0x08 /* Private */,
 
  // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -125,6 +139,10 @@ void UtilGui::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         case 11: _t->OnBtStopQueue(); break;
         case 12: _t->OnBtQueueSize(); break;
         case 13: _t->OnBtPrint(); break;
+        case 14: _t->OnBtJson2Db(); break;
+        case 15: _t->OnBtWeb(); break;
+        case 16: _t->OnBtStartThreadClicked(); break;
+        case 17: _t->OnBtStopThreadClicked(); break;
         default: ;
         }
     }
@@ -156,13 +174,13 @@ int UtilGui::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 14)
+        if (_id < 18)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 18;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 14)
+        if (_id < 18)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 14;
+        _id -= 18;
     }
     return _id;
 }
