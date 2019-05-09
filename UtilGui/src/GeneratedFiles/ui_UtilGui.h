@@ -56,6 +56,9 @@ public:
     QHBoxLayout *horizontalLayout_5;
     QPushButton *m_pBtStartThread;
     QPushButton *m_pBtStopThread;
+    QHBoxLayout *horizontalLayout_6;
+    QPushButton *m_pBtRapidJsonRead;
+    QPushButton *m_pBtRapidJsonWrite;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -69,7 +72,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayoutWidget = new QWidget(centralWidget);
         verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(0, 1, 591, 320));
+        verticalLayoutWidget->setGeometry(QRect(0, 1, 591, 357));
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -200,6 +203,22 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_5);
 
+        horizontalLayout_6 = new QHBoxLayout();
+        horizontalLayout_6->setSpacing(6);
+        horizontalLayout_6->setObjectName(QStringLiteral("horizontalLayout_6"));
+        m_pBtRapidJsonRead = new QPushButton(verticalLayoutWidget);
+        m_pBtRapidJsonRead->setObjectName(QStringLiteral("m_pBtRapidJsonRead"));
+
+        horizontalLayout_6->addWidget(m_pBtRapidJsonRead);
+
+        m_pBtRapidJsonWrite = new QPushButton(verticalLayoutWidget);
+        m_pBtRapidJsonWrite->setObjectName(QStringLiteral("m_pBtRapidJsonWrite"));
+
+        horizontalLayout_6->addWidget(m_pBtRapidJsonWrite);
+
+
+        verticalLayout->addLayout(horizontalLayout_6);
+
         UtilGuiClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(UtilGuiClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -239,6 +258,8 @@ public:
         m_pBtWeb->setText(QApplication::translate("UtilGuiClass", "\346\211\223\345\274\200QtWeb", 0));
         m_pBtStartThread->setText(QApplication::translate("UtilGuiClass", "\345\274\200\345\220\257\347\272\277\347\250\213", 0));
         m_pBtStopThread->setText(QApplication::translate("UtilGuiClass", "\345\201\234\346\255\242\347\272\277\347\250\213", 0));
+        m_pBtRapidJsonRead->setText(QApplication::translate("UtilGuiClass", "RapidJsonRead", 0));
+        m_pBtRapidJsonWrite->setText(QApplication::translate("UtilGuiClass", "RapidJsonWrite", 0));
     } // retranslateUi
 
 };

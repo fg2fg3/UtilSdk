@@ -52,6 +52,8 @@ private slots:
 	void OnBtWeb();
 	void OnBtStartThreadClicked();
 	void OnBtStopThreadClicked();
+	void OnBtRapidJsonReadClicked();
+	void OnBtRapidJsonWriteClicked();
 
 protected:
 	void closeEvent(QCloseEvent *event);

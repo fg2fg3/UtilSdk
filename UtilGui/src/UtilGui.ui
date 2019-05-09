@@ -20,7 +20,7 @@
       <x>0</x>
       <y>1</y>
       <width>591</width>
-      <height>320</height>
+      <height>357</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -172,6 +172,24 @@
         <widget class="QPushButton" name="m_pBtStopThread">
          <property name="text">
           <string>停止线程</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item>
+        <widget class="QPushButton" name="m_pBtRapidJsonRead">
+         <property name="text">
+          <string>RapidJsonRead</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="m_pBtRapidJsonWrite">
+         <property name="text">
+          <string>RapidJsonWrite</string>
          </property>
         </widget>
        </item>
