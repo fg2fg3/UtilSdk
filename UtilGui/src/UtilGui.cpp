@@ -247,7 +247,7 @@ void UtilGui::PrepareSlot()
 	connect(ui.m_pBtStopBoostCS, SIGNAL(clicked()), this, SLOT(OnBtBoostStopCSClicked()));
 	connect(ui.m_pBtCharTest, SIGNAL(clicked()), this, SLOT(OnBtCharTestClicked()));
 	connect(ui.m_pBtConIOCPServer, SIGNAL(clicked()), this, SLOT(OnBtConIOCPServerClicked()));
-	connect(ui.m_pBtDisConIOCPServer, SIGNAL(clicked()), this, SLOT(OnBtDisConIOCPServerClicked()));
+	connect(ui.m_pBtDisconIOCPServer, SIGNAL(clicked()), this, SLOT(OnBtDisConIOCPServerClicked()));
 }
 
 void UtilGui::OnBtChineseSupportClicked()
@@ -1077,33 +1077,53 @@ void UtilGui::OnBtCharTestClicked()
 
 void UtilGui::OnBtConIOCPServerClicked()
 {
-	WORD socketVersion = MAKEWORD(2, 2);
-	WSADATA wsaData;
-	if (WSAStartup(socketVersion, &wsaData) != 0)
+	WORD sockVersion = MAKEWORD(2, 2);
+	WSADATA data;
+	if (WSAStartup(sockVersion, &data) != 0)
 	{
 		return ;
 	}
-	SOCKET sclient = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	while (true){
+		SOCKET sclient = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+		if (sclient == INVALID_SOCKET)
+		{
+			printf("invalid socket!");
+			return ;
+		}
 
-	sockaddr_in sin;
-	sin.sin_family = AF_INET;
-	sin.sin_port = htons(80);
-	sin.sin_addr.S_un.S_addr = inet_addr("127.0.0.1");
-	int len = sizeof(sin);
+		sockaddr_in serAddr;
+		serAddr.sin_family = AF_INET;
+		serAddr.sin_port = htons(80);
+		serAddr.sin_addr.S_un.S_addr = inet_addr("10.0.4.194");
+		if (::connect(sclient, (sockaddr *)&serAddr, sizeof(serAddr)) == SOCKET_ERROR)
+		{  //连接失败 
+			printf("connect error !");
+			closesocket(sclient);
+			return ;
+		}
 
-	const char * sendData = "来自客户端的数据包.\n";
-	sendto(sclient, sendData, strlen(sendData), 0, (sockaddr *)&sin, len);
+		string data;
+		cin >> data;
+		const char * sendData;
+		sendData = data.c_str();   //string转const char* 
+		//char * sendData = "你好，TCP服务端，我是客户端\n";
+		send(sclient, sendData, strlen(sendData), 0);
+		//send()用来将数据由指定的socket传给对方主机
+		//int send(int s, const void * msg, int len, unsigned int flags)
+		//s为已建立好连接的socket，msg指向数据内容，len则为数据长度，参数flags一般设0
+		//成功则返回实际传送出去的字符数，失败返回-1，错误原因存于error 
 
-	char recvData[255];
-	int ret = recvfrom(sclient, recvData, 255, 0, (sockaddr *)&sin, &len);
-	if (ret > 0)
-	{
-		recvData[ret] = 0x00;
-		printf(recvData);
+		char recData[255];
+		int ret = recv(sclient, recData, 255, 0);
+		if (ret>0){
+			recData[ret] = 0x00;
+			printf(recData);
+		}
+		closesocket(sclient);
 	}
 
-	closesocket(sclient);
 	WSACleanup();
+	return ;
 }
 
 void UtilGui::OnBtDisConIOCPServerClicked()
