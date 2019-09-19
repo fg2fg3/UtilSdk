@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UtilGui", "UtilGui\src\Util
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UtilSdk", "UtilSdk\src\UtilSdk.vcxproj", "{F13C0945-564F-42D9-A850-42214138089C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IOCP_Server", "IOCP_Server\IOCP_Server\IOCP_Server.vcxproj", "{10540501-DD79-4CB8-A6BA-AB869B6FF83C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -21,6 +23,10 @@ Global
 		{F13C0945-564F-42D9-A850-42214138089C}.Debug|Win32.Build.0 = Debug|Win32
 		{F13C0945-564F-42D9-A850-42214138089C}.Release|Win32.ActiveCfg = Release|Win32
 		{F13C0945-564F-42D9-A850-42214138089C}.Release|Win32.Build.0 = Release|Win32
+		{10540501-DD79-4CB8-A6BA-AB869B6FF83C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{10540501-DD79-4CB8-A6BA-AB869B6FF83C}.Debug|Win32.Build.0 = Debug|Win32
+		{10540501-DD79-4CB8-A6BA-AB869B6FF83C}.Release|Win32.ActiveCfg = Release|Win32
+		{10540501-DD79-4CB8-A6BA-AB869B6FF83C}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

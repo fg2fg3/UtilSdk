@@ -20,7 +20,7 @@
       <x>0</x>
       <y>1</y>
       <width>591</width>
-      <height>357</height>
+      <height>431</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -190,6 +190,56 @@
         <widget class="QPushButton" name="m_pBtRapidJsonWrite">
          <property name="text">
           <string>RapidJsonWrite</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <item>
+        <widget class="QPushButton" name="m_pBtBoostServer">
+         <property name="text">
+          <string>启动BoostServer</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="m_pBtBoostClient">
+         <property name="text">
+          <string>启动BoostClient</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="m_pBtStopBoostCS">
+         <property name="text">
+          <string>停止Boost客户端服务器</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_8">
+       <item>
+        <widget class="QPushButton" name="m_pBtCharTest">
+         <property name="text">
+          <string>字符测试</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="m_pBtConIOCPServer">
+         <property name="text">
+          <string>连接IOCP服务端</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="m_pBtDisconIOCPServer">
+         <property name="text">
+          <string>断开连接IOCP服务端</string>
          </property>
         </widget>
        </item>

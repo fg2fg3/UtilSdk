@@ -28,6 +28,10 @@
 #include "rapidjson/stringbuffer.h"
 #include <iostream>
 #include <fstream>
+//#include "BoostCS.h"
+#include <winsock2.h> 
+
+#pragma comment(lib,"ws2_32.lib")  
 using namespace rapidjson;
 using namespace std;
 
@@ -128,6 +132,7 @@ int hex2int(char c)
 	{
 		return c - '0';
 	}
+	return false;
 }
 
 int HexString2int(QString qsHex)
@@ -237,6 +242,12 @@ void UtilGui::PrepareSlot()
 	connect(ui.m_pBtStopThread, SIGNAL(clicked()), this, SLOT(OnBtStopThreadClicked()));
 	connect(ui.m_pBtRapidJsonRead, SIGNAL(clicked()), this, SLOT(OnBtRapidJsonReadClicked()));
 	connect(ui.m_pBtRapidJsonWrite, SIGNAL(clicked()), this, SLOT(OnBtRapidJsonWriteClicked()));
+	connect(ui.m_pBtBoostServer, SIGNAL(clicked()), this, SLOT(OnBtBoostServerClicked()));
+	connect(ui.m_pBtBoostClient, SIGNAL(clicked()), this, SLOT(OnBtBoostClientClicked()));
+	connect(ui.m_pBtStopBoostCS, SIGNAL(clicked()), this, SLOT(OnBtBoostStopCSClicked()));
+	connect(ui.m_pBtCharTest, SIGNAL(clicked()), this, SLOT(OnBtCharTestClicked()));
+	connect(ui.m_pBtConIOCPServer, SIGNAL(clicked()), this, SLOT(OnBtConIOCPServerClicked()));
+	connect(ui.m_pBtDisConIOCPServer, SIGNAL(clicked()), this, SLOT(OnBtDisConIOCPServerClicked()));
 }
 
 void UtilGui::OnBtChineseSupportClicked()
@@ -1021,4 +1032,80 @@ void UtilGui::OnBtRapidJsonReadClicked()
 		data = node4[i];
 		cout << '\t' << "height: " << data["height"].GetDouble() << endl;
 	}
+}
+
+void UtilGui::OnBtBoostServerClicked()
+{
+	//talk_to_client::ptr client = talk_to_client::new_();
+	//acceptor.async_accept(client->sock(), boost::bind(handle_accept, client, _1));
+	//service.run();
+}
+
+void UtilGui::OnBtBoostClientClicked()
+{
+	//ip::tcp::endpoint ep(ip::address::from_string("127.0.0.1"), 8001);
+	//char* names[] = { "John", "James", "Lucy", "Tracy", "Frank", "Abby", 0 };
+	//for (char ** name = names; *name; ++name) {
+	//	talk_to_svr::start(ep, *name);
+	//	boost::this_thread::sleep(boost::posix_time::millisec(100));
+	//}
+	//
+	//service.run();
+}
+
+void UtilGui::OnBtBoostStopCSClicked()
+{
+
+}
+
+void UtilGui::OnBtCharTestClicked()
+{
+	int ft1 = 0x89abcdef;
+	char buf[8] = { 0 };
+
+	buf[0] = ((ft1 >> 24) & 0x3f) << 4;
+	buf[1] = (ft1 >> 24);
+
+
+	//将ft1的最高6位放到buf2中
+	//ft1>>24 将最高位移到最低位，高六位继续>>2高2位补11变成e2,再&0x3f取低六位
+	buf[2] = (ft1 >> 26) & 0x3f;
+
+	buf[3] = ft1;//结果是ef
+
+}
+
+void UtilGui::OnBtConIOCPServerClicked()
+{
+	WORD socketVersion = MAKEWORD(2, 2);
+	WSADATA wsaData;
+	if (WSAStartup(socketVersion, &wsaData) != 0)
+	{
+		return ;
+	}
+	SOCKET sclient = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+
+	sockaddr_in sin;
+	sin.sin_family = AF_INET;
+	sin.sin_port = htons(80);
+	sin.sin_addr.S_un.S_addr = inet_addr("127.0.0.1");
+	int len = sizeof(sin);
+
+	const char * sendData = "来自客户端的数据包.\n";
+	sendto(sclient, sendData, strlen(sendData), 0, (sockaddr *)&sin, len);
+
+	char recvData[255];
+	int ret = recvfrom(sclient, recvData, 255, 0, (sockaddr *)&sin, &len);
+	if (ret > 0)
+	{
+		recvData[ret] = 0x00;
+		printf(recvData);
+	}
+
+	closesocket(sclient);
+	WSACleanup();
+}
+
+void UtilGui::OnBtDisConIOCPServerClicked()
+{
 }

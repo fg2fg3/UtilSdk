@@ -1,0 +1,34 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IOCP_Server", "IOCP_Server\IOCP_Server.vcproj", "{10540501-DD79-4CB8-A6BA-AB869B6FF83C}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 2
+		SccLocalPath0 = .
+		CanCheckoutShared = false
+		SolutionUniqueID = {AEADC874-15C3-40A2-A9EC-B2FB4F7F5216}
+		SccProjectUniqueName1 = IOCP_Server\\IOCP_Server.vcproj
+		SccLocalPath1 = .
+		CanCheckoutShared = false
+		SccProjectFilePathRelativizedFromConnection1 = IOCP_Server\\
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{10540501-DD79-4CB8-A6BA-AB869B6FF83C}.Debug.ActiveCfg = Debug|Win32
+		{10540501-DD79-4CB8-A6BA-AB869B6FF83C}.Debug.Build.0 = Debug|Win32
+		{10540501-DD79-4CB8-A6BA-AB869B6FF83C}.Release.ActiveCfg = Release|Win32
+		{10540501-DD79-4CB8-A6BA-AB869B6FF83C}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionItems) = postSolution
+		IOCP_Server.vsd = IOCP_Server.vsd
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

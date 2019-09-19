@@ -35,7 +35,7 @@ public:
     QLabel *m_pLbPic2Path;
     QHBoxLayout *horizontalLayout_2;
     QPushButton *m_pBtMergePic;
-    QPushButton *pushButton_2;
+    QPushButton *m_pBtSaveBin;
     QPushButton *pushButton_3;
     QHBoxLayout *horizontalLayout_3;
     QLabel *m_pLbPic1;
@@ -89,10 +89,10 @@ public:
 
         horizontalLayout_2->addWidget(m_pBtMergePic);
 
-        pushButton_2 = new QPushButton(verticalLayoutWidget);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+        m_pBtSaveBin = new QPushButton(verticalLayoutWidget);
+        m_pBtSaveBin->setObjectName(QStringLiteral("m_pBtSaveBin"));
 
-        horizontalLayout_2->addWidget(pushButton_2);
+        horizontalLayout_2->addWidget(m_pBtSaveBin);
 
         pushButton_3 = new QPushButton(verticalLayoutWidget);
         pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
@@ -155,7 +155,7 @@ public:
         m_pBtPic2->setText(QApplication::translate("OpencvDemoDialog", "\351\200\211\345\233\2762", 0));
         m_pLbPic2Path->setText(QApplication::translate("OpencvDemoDialog", "TextLabel", 0));
         m_pBtMergePic->setText(QApplication::translate("OpencvDemoDialog", "\345\217\240\345\233\276", 0));
-        pushButton_2->setText(QApplication::translate("OpencvDemoDialog", "PushButton", 0));
+        m_pBtSaveBin->setText(QApplication::translate("OpencvDemoDialog", "\346\225\260\346\215\256\345\255\230\344\270\272\344\272\214\350\277\233\345\210\266", 0));
         pushButton_3->setText(QApplication::translate("OpencvDemoDialog", "PushButton", 0));
         m_pLbPic1->setText(QApplication::translate("OpencvDemoDialog", "TextLabel", 0));
         m_pLbPic2->setText(QApplication::translate("OpencvDemoDialog", "TextLabel", 0));

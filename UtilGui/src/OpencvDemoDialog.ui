@@ -65,9 +65,9 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="m_pBtSaveBin">
         <property name="text">
-         <string>PushButton</string>
+         <string>数据存为二进制</string>
         </property>
        </widget>
       </item>

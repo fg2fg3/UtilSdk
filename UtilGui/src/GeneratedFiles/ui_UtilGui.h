@@ -59,6 +59,14 @@ public:
     QHBoxLayout *horizontalLayout_6;
     QPushButton *m_pBtRapidJsonRead;
     QPushButton *m_pBtRapidJsonWrite;
+    QHBoxLayout *horizontalLayout_7;
+    QPushButton *m_pBtBoostServer;
+    QPushButton *m_pBtBoostClient;
+    QPushButton *m_pBtStopBoostCS;
+    QHBoxLayout *horizontalLayout_8;
+    QPushButton *m_pBtCharTest;
+    QPushButton *m_pBtConIOCPServer;
+    QPushButton *m_pBtDisconIOCPServer;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -72,7 +80,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayoutWidget = new QWidget(centralWidget);
         verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(0, 1, 591, 357));
+        verticalLayoutWidget->setGeometry(QRect(0, 1, 591, 431));
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -219,6 +227,48 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_6);
 
+        horizontalLayout_7 = new QHBoxLayout();
+        horizontalLayout_7->setSpacing(6);
+        horizontalLayout_7->setObjectName(QStringLiteral("horizontalLayout_7"));
+        m_pBtBoostServer = new QPushButton(verticalLayoutWidget);
+        m_pBtBoostServer->setObjectName(QStringLiteral("m_pBtBoostServer"));
+
+        horizontalLayout_7->addWidget(m_pBtBoostServer);
+
+        m_pBtBoostClient = new QPushButton(verticalLayoutWidget);
+        m_pBtBoostClient->setObjectName(QStringLiteral("m_pBtBoostClient"));
+
+        horizontalLayout_7->addWidget(m_pBtBoostClient);
+
+        m_pBtStopBoostCS = new QPushButton(verticalLayoutWidget);
+        m_pBtStopBoostCS->setObjectName(QStringLiteral("m_pBtStopBoostCS"));
+
+        horizontalLayout_7->addWidget(m_pBtStopBoostCS);
+
+
+        verticalLayout->addLayout(horizontalLayout_7);
+
+        horizontalLayout_8 = new QHBoxLayout();
+        horizontalLayout_8->setSpacing(6);
+        horizontalLayout_8->setObjectName(QStringLiteral("horizontalLayout_8"));
+        m_pBtCharTest = new QPushButton(verticalLayoutWidget);
+        m_pBtCharTest->setObjectName(QStringLiteral("m_pBtCharTest"));
+
+        horizontalLayout_8->addWidget(m_pBtCharTest);
+
+        m_pBtConIOCPServer = new QPushButton(verticalLayoutWidget);
+        m_pBtConIOCPServer->setObjectName(QStringLiteral("m_pBtConIOCPServer"));
+
+        horizontalLayout_8->addWidget(m_pBtConIOCPServer);
+
+        m_pBtDisconIOCPServer = new QPushButton(verticalLayoutWidget);
+        m_pBtDisconIOCPServer->setObjectName(QStringLiteral("m_pBtDisconIOCPServer"));
+
+        horizontalLayout_8->addWidget(m_pBtDisconIOCPServer);
+
+
+        verticalLayout->addLayout(horizontalLayout_8);
+
         UtilGuiClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(UtilGuiClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -260,6 +310,12 @@ public:
         m_pBtStopThread->setText(QApplication::translate("UtilGuiClass", "\345\201\234\346\255\242\347\272\277\347\250\213", 0));
         m_pBtRapidJsonRead->setText(QApplication::translate("UtilGuiClass", "RapidJsonRead", 0));
         m_pBtRapidJsonWrite->setText(QApplication::translate("UtilGuiClass", "RapidJsonWrite", 0));
+        m_pBtBoostServer->setText(QApplication::translate("UtilGuiClass", "\345\220\257\345\212\250BoostServer", 0));
+        m_pBtBoostClient->setText(QApplication::translate("UtilGuiClass", "\345\220\257\345\212\250BoostClient", 0));
+        m_pBtStopBoostCS->setText(QApplication::translate("UtilGuiClass", "\345\201\234\346\255\242Boost\345\256\242\346\210\267\347\253\257\346\234\215\345\212\241\345\231\250", 0));
+        m_pBtCharTest->setText(QApplication::translate("UtilGuiClass", "\345\255\227\347\254\246\346\265\213\350\257\225", 0));
+        m_pBtConIOCPServer->setText(QApplication::translate("UtilGuiClass", "\350\277\236\346\216\245IOCP\346\234\215\345\212\241\347\253\257", 0));
+        m_pBtDisconIOCPServer->setText(QApplication::translate("UtilGuiClass", "\346\226\255\345\274\200\350\277\236\346\216\245IOCP\346\234\215\345\212\241\347\253\257", 0));
     } // retranslateUi
 
 };

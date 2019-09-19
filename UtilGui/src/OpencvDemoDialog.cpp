@@ -1,6 +1,12 @@
 #include "OpencvDemoDialog.h"
 #include <QFileDialog>
 #include <QApplication>
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <QTextCodec>
+using namespace std;
+using namespace cv;
 
 OpencvDemoDialog::OpencvDemoDialog(QWidget *parent)
 	: QDialog(parent)
@@ -10,9 +16,10 @@ OpencvDemoDialog::OpencvDemoDialog(QWidget *parent)
 	connect(ui.m_pBtPic1, SIGNAL(clicked()), this, SLOT(OnBtPic1Clicked()));
 	connect(ui.m_pBtPic2, SIGNAL(clicked()), this, SLOT(OnBtPic2Clicked()));
 	connect(ui.m_pBtMergePic, SIGNAL(clicked()), this, SLOT(OnBtMergePic()));
+	connect(ui.m_pBtSaveBin, SIGNAL(clicked()), this, SLOT(OnBtSaveBin()));
 
-	OnBtPic1Clicked();
-	OnBtPic2Clicked();
+	//OnBtPic1Clicked();
+	//OnBtPic2Clicked();
 }
 
 OpencvDemoDialog::~OpencvDemoDialog()
@@ -69,3 +76,52 @@ void OpencvDemoDialog::OnBtMergePic()
 	ui.m_pLbPicMerge->setPixmap(mp);
 }
 
+void OpencvDemoDialog::OnBtSaveBin()
+{
+	//save the image data to bin,BGR format
+	QStringList paths = QFileDialog::getOpenFileNames(this, tr("selc"), qApp->applicationDirPath(), "*.*");
+	QTextCodec *code = QTextCodec::codecForName("gb2312");
+
+	for (int i = 0; i < paths.length(); i++)
+	{
+		std::string name = code->fromUnicode(paths.at(i)).data();
+		std::string dstName = name;
+		dstName = dstName.replace(dstName.end() - 3, dstName.end(), "bgra");
+		FILE *fpw = fopen(dstName.c_str(), "wb");
+		if (fpw == NULL)
+		{
+			cout << "Open error!" << endl;
+			fclose(fpw);
+			return;
+		}
+
+		Mat image = imread(name);
+		int nCh = image.channels();
+		if (!image.data || image.channels() != 3)
+		{
+			cout << "Image read failed or image channels isn't equal to 3."
+				<< endl;
+			return;
+		}
+
+		// write image to binary format file
+		int labelw = 1;
+		int rows = image.rows;
+		int cols = image.cols;
+
+		//fwrite(&labelw, sizeof(char), 1, fpw);
+		char alpha = 0xFF;
+		char* dp = (char*)image.data;
+		for (int i = 0; i<rows*cols; i++)
+		{
+			//opencv°´ÕÕBGRA¶ÁÈ¡
+			fwrite(&dp[i * 3], sizeof(char), 1, fpw);
+			fwrite(&dp[i * 3 + 1], sizeof(char), 1, fpw);
+			fwrite(&dp[i * 3 + 2], sizeof(char), 1, fpw);
+			fwrite(&alpha, sizeof(char), 1, fpw);
+			//printf("%d,%d,%d", dp[i * 3], dp[i * 3 + 1], dp[i * 3 +2]);
+		}
+		fclose(fpw);
+	}
+
+}

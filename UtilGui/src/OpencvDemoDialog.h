@@ -25,4 +25,5 @@ private slots:
 	void OnBtPic1Clicked();
 	void OnBtPic2Clicked();
 	void OnBtMergePic();
+	void OnBtSaveBin();
 };
