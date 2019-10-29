@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UtilSdk", "UtilSdk\src\Util
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IOCP_Server", "IOCP_Server\IOCP_Server\IOCP_Server.vcxproj", "{10540501-DD79-4CB8-A6BA-AB869B6FF83C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "epoll_server", "epoll_server\epoll_server\epoll_server.vcxproj", "{871ABFB7-BB71-48E6-9062-105D0205736D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -27,6 +29,10 @@ Global
 		{10540501-DD79-4CB8-A6BA-AB869B6FF83C}.Debug|Win32.Build.0 = Debug|Win32
 		{10540501-DD79-4CB8-A6BA-AB869B6FF83C}.Release|Win32.ActiveCfg = Release|Win32
 		{10540501-DD79-4CB8-A6BA-AB869B6FF83C}.Release|Win32.Build.0 = Release|Win32
+		{871ABFB7-BB71-48E6-9062-105D0205736D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{871ABFB7-BB71-48E6-9062-105D0205736D}.Debug|Win32.Build.0 = Debug|Win32
+		{871ABFB7-BB71-48E6-9062-105D0205736D}.Release|Win32.ActiveCfg = Release|Win32
+		{871ABFB7-BB71-48E6-9062-105D0205736D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
